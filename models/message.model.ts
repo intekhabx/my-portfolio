@@ -3,9 +3,13 @@ import { Document } from "mongoose";
 
 
 export interface IMessage extends Document {
+  _id: mongoose.Types.ObjectId
   name: string,
   email: string,
   message: string,
+  markAsRead: boolean
+  createdAt?: Date
+  updatedAt?: Date
 }
 
 
@@ -26,8 +30,12 @@ const messageSchema = new mongoose.Schema<IMessage>({
     type: String,
     required: [true, "message is required"],
     minlength: 10
+  },
+  markAsRead: {
+    type: Boolean,
+    default: false
   }
 }, {timestamps: true})
 
 
-export const messageModel = mongoose.model("Message", messageSchema);
+export const messageModel = mongoose.models.Message || mongoose.model<IMessage>("Message", messageSchema);

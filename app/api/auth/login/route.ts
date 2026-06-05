@@ -1,5 +1,6 @@
 import JWT, {SignOptions} from "jsonwebtoken";
 import { NextRequest, NextResponse } from "next/server";
+import { loginSchemaDto } from "@/lib/validation";
 
 const EMAIL = process.env.ADMIN_EMAIL;
 const PASSWORD = process.env.ADMIN_PASSWORD;
@@ -9,7 +10,8 @@ const EXPIRY = process.env.JWT_SECRET_EXPIRES_IN;
 export async function POST(request: NextRequest){
   try {
     // extract the payload from request
-    const {email, password} = await request.json();
+    const body = await request.json();
+    const {email, password} = await loginSchemaDto.parseAsync(body);
     
     if(!EMAIL || !PASSWORD){
       return NextResponse.json({

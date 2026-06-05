@@ -4,6 +4,8 @@ import { messageModel } from "@/models/message.model";
 import { isLoggedIn } from "@/utils/auth.utils";
 import { NextRequest, NextResponse } from "next/server";
 
+
+// function that fetch all messages
 export async function GET(req: NextRequest) {
   try {
     const isVerified = await isLoggedIn(req);
@@ -13,7 +15,7 @@ export async function GET(req: NextRequest) {
 
     await dbConnection();
 
-    const messages = await messageModel.find();
+    const messages = await messageModel.find({}).sort({ createdAt: -1 }).lean();
 
     return NextResponse.json({
       message: "message fetched successfully",
@@ -29,14 +31,9 @@ export async function GET(req: NextRequest) {
 }
 
 
-// not used yet
+// not used yet - function of create or send message
 export async function POST(req: NextRequest){
   try {
-    const isVerified = await isLoggedIn(req);
-    if(!isVerified){
-      return NextResponse.redirect(new URL("/admin/login", req.url));
-    }
-
     //extract the payload fromm request
     const rawBody = await req.json();
     const body = await messageSchemaDto.safeParseAsync(rawBody);

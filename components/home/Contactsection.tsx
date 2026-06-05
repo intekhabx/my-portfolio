@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { submitContact } from "@/lib/actions";
+import { submitContactMessage } from "@/lib/actions";
 
 export default function ContactSection() {
   const [status, setStatus] = useState<
@@ -14,15 +14,24 @@ export default function ContactSection() {
     setStatus("loading");
 
     try {
-      const res = await submitContact(formData);
+      const res = await submitContactMessage(formData);
 
       if (res.success) {
         setStatus("success");
-      } else {
-        setStatus("error");
-        setErrMsg(res.error ?? "Something went wrong.");
       }
-    } catch {
+      else {
+        setStatus("error");
+        const err = res.error;
+        if(typeof err === 'string'){
+          setErrMsg(err ?? "Something went wrong.");
+        }
+        else{
+          // zod error
+          setErrMsg(err?.email?.[0] || err?.name?.[0] || err?.message?.[0] || "Invalid input")
+        }
+      }
+    } 
+    catch {
       setStatus("error");
       setErrMsg("Something went wrong. Please try again.");
     }
@@ -62,7 +71,7 @@ export default function ContactSection() {
         <div className="grid grid-cols-2 gap-6">
           {[
             { num: "24h", label: "Response time" },
-            { num: "12+", label: "Projects shipped" },
+            { num: "5+", label: "Projects shipped" },
           ].map(({ num, label }) => (
             <div key={label}>
               <p className="mb-1 text-[28px] leading-none tracking-[-1px] md:text-[32px] font-[var(--font-display)] text-[var(--accent)]">

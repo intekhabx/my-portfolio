@@ -1,4 +1,5 @@
 import dbConnection from "@/lib/db";
+import { messageSchemaDto } from "@/lib/validation";
 import { messageModel } from "@/models/message.model";
 import { isLoggedIn } from "@/utils/auth.utils";
 import { NextRequest, NextResponse } from "next/server";
@@ -28,6 +29,7 @@ export async function GET(req: NextRequest) {
 }
 
 
+// not used yet
 export async function POST(req: NextRequest){
   try {
     const isVerified = await isLoggedIn(req);
@@ -36,7 +38,16 @@ export async function POST(req: NextRequest){
     }
 
     //extract the payload fromm request
-    const {name, email, message} = await req.json();
+    const rawBody = await req.json();
+    const body = await messageSchemaDto.safeParseAsync(rawBody);
+
+    if(!body.success){
+      return NextResponse.json({
+        error: body.error.flatten().fieldErrors
+      }, {status: 400})
+    }
+
+    const {email, message, name} = body.data;
 
     await dbConnection();
 

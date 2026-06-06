@@ -1,8 +1,6 @@
 "use client";
 
-// components/admin/DashboardSidebar.tsx
-// CLIENT COMPONENT — usePathname for active link
-
+import axios from "axios";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { MdDashboard, MdMessage, MdFolder, MdPerson, MdLogout } from "react-icons/md";
@@ -21,12 +19,12 @@ const navItems = [
       { label: "Projects", href: "/admin/project", icon: MdFolder },
     ],
   },
-  {
-    group: "Settings",
-    links: [
-      { label: "Profile", href: "/admin/profile", icon: MdPerson },
-    ],
-  },
+  // {
+  //   group: "Settings",
+  //   links: [
+  //     { label: "Profile", href: "/admin/profile", icon: MdPerson },
+  //   ],
+  // },
 ];
 
 export default function DashboardSidebar({ unreadCount = 0 }: { unreadCount?: number }) {
@@ -34,8 +32,13 @@ export default function DashboardSidebar({ unreadCount = 0 }: { unreadCount?: nu
   const router   = useRouter();
 
   const handleLogout = async () => {
-    await fetch("/api/auth/logout", { method: "POST" });
-    router.replace("/admin/login");
+    try {
+      await axios.post("/api/auth/logout");
+      router.replace("/admin/login");
+    } 
+    catch (err) {
+      console.error("error while logout", err);
+    }
   };
 
   return (

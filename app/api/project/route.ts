@@ -4,16 +4,19 @@ import { isLoggedIn } from "@/utils/auth.utils";
 import { NextRequest, NextResponse } from "next/server";
 
 
+// function that fetch all project
 export async function GET(req: NextRequest){
   try {
     const isVerified = await isLoggedIn(req);
     if(!isVerified){
-      return NextResponse.redirect(new URL("/admin/login", req.url));
+      return NextResponse.json({
+        error: "Unauthorized" 
+      }, { status: 401 });
     }
 
     await dbConnection();
 
-    const projects = await projectModel.find();
+    const projects = await projectModel.find({}).sort({createdAt: -1}).lean();
 
     return NextResponse.json({
       message: "project is fetched successfully",
@@ -29,11 +32,14 @@ export async function GET(req: NextRequest){
 
 
 
+// fucntion to create or add project
 export async function POST(req: NextRequest){
   try {
     const isVerified = await isLoggedIn(req);
-    if(!isVerified){
-      return NextResponse.redirect(new URL("/admin/login", req.url));
+    if (!isVerified) {
+      return NextResponse.json({
+        error: "Unauthorized" 
+      }, { status: 401 });
     }
 
     //extract the payload form request

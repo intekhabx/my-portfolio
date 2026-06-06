@@ -16,3 +16,16 @@ export const messageSchemaDto = z.object({
 });
 
 export type messageSchemaType = z.infer<typeof messageSchemaDto>;
+
+
+
+export const projectSchemaDto = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  description: z.string().max(500).optional(),
+  githubLink: z.url("invalid github url"),
+  liveLink: z.url("invalid live url"),
+  techStack: z.string(), //we take input as string and store it as array
+  // techStack: z.array(z.string()),
+})
+
+export type ProjectSchemaType = z.infer<typeof projectSchemaDto>;

@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { LoginSchemaType, loginSchemaDto } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { GoX } from "react-icons/go";
+import axios from "axios";
 
 const Login = () => {
   const [success, setSuccess] = useState("");
@@ -25,18 +26,14 @@ const Login = () => {
     setError("");
     setSuccess("");
     try {
-      const res = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      const result = await res.json();
-      if (!res.ok) return setError(result.error);
-      setSuccess(result.message);
+      const response = await axios.post('/api/auth/login', data)
+      setSuccess(response?.data?.message);
       router.replace("/admin/dashboard");
-    } catch (err) {
+      router.refresh();
+    } 
+    catch (err: any) {
       console.log("error occur", err);
-      setError("Something went wrong. Please try again.");
+      setError(err.response?.data?.error ||"Something went wrong. Please try again.");
     }
   };
 

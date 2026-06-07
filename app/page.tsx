@@ -34,7 +34,7 @@ export default async function HomePage() {
       <SideNav />
  
       {/* Main content — offset by sidebar width (52px) */}
-      <main className="flex-1 flex flex-col" style={{ marginLeft: "52px" }}>
+      <main className="flex-1 flex flex-col md:ml-[52px]">
         <HeroSection />
         <ProjectsSection projects={projects} />
         <AboutSection />

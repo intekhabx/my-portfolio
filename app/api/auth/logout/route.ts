@@ -6,14 +6,14 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest){
   try {
-    const isVerified = await isLoggedIn(req);
-    if(!isVerified){
-      return NextResponse.json({
-        error: "UnAuthorized"
-      }, {status: 401});
-    }
+    // const isVerified = await isLoggedIn(req);
+    // if(!isVerified){
+    //   return NextResponse.json({
+    //     error: "UnAuthorized"
+    //   }, {status: 401});
+    // }
 
-    await dbConnection();
+    // await dbConnection();
 
     const response = NextResponse.json({
       message: "logged out successfully"

@@ -11,8 +11,8 @@ export async function proxy(req: NextRequest){
     const token = req.cookies.get("admin-token")?.value;
 
     // if user wants to go on login page
-    const {pathname} = req.nextUrl
-    if(pathname === '/admin/login'){
+    const isLoginRoute = req.nextUrl.pathname.startsWith("/admin/login")
+    if(isLoginRoute){
       return NextResponse.next();
     }
 

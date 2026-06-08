@@ -5,7 +5,7 @@ export default function Footer() {
 
   return (
     <footer
-      className="flex justify-between items-center px-10 py-4"
+      className="mt-8 md:mt-0 flex justify-between items-center px-10 py-4"
       style={{ borderTop: "1px solid var(--border)" }}
     >
       <p

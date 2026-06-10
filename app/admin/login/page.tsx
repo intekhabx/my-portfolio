@@ -28,8 +28,11 @@ const Login = () => {
     try {
       const response = await axios.post('/api/auth/login', data)
       setSuccess(response?.data?.message);
-      router.refresh();
-      router.replace("/admin/dashboard");
+      setTimeout(() => {
+        window.location.href = "/admin/dashboard"
+        // router.refresh();
+        // router.replace("/admin/dashboard");
+      }, 500);
     } 
     catch (err: any) {
       console.log("error occur", err);

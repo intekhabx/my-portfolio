@@ -1,5 +1,4 @@
-// components/HeroTopBar.tsx
-// SERVER COMPONENT — static top bar, no interactivity
+import Image from "next/image";
 
 import Link from "next/link";
 
@@ -9,12 +8,13 @@ export default function HeroTopBar() {
       className="flex items-center justify-between px-12 py-5"
       style={{ borderBottom: "1px solid var(--line)" }}
     >
-      <p
-        className="text-[11px] tracking-[3px] uppercase"
-        style={{ color: "var(--ink-muted)" }}
-      >
-        Full Stack Developer — MERN · Next.js
-      </p>
+      <div className="flex justify-center items-center gap-2">
+        <Image src="/favicon.png" width={42} height={42} alt="logo" />
+        <p className=" mt-2 text-[11px] tracking-[3px] uppercase"
+          style={{ color: "var(--ink-muted)" }}>
+          Full Stack Developer — MERN · Next.js
+        </p>
+      </div>
 
       <div className="flex items-center gap-6">
         {/* <span

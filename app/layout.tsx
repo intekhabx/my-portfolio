@@ -13,8 +13,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "intekhabx - Portfolio",
+  title: "Intekhabx - House of Code",
   description: "A modern personal portfolio web application designed to showcase my projects, skills, and development journey. It allows me to add, update, and manage my projects with details like descriptions, tech stacks, GitHub repositories, and live links. Built with a focus on clean UI, smooth user experience, and efficient form handling with proper validation",
+  icons: {
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
+  },
 };
 
 export default function RootLayout({

@@ -1,58 +1,84 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&display=swap');
 @import "tailwindcss";
 
-/* :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-} */
-
-
-/* @tailwind base;
-@tailwind components;
-@tailwind utilities; */
-
+/* LIGHT THEME */
 :root {
-  --bg:        #ede3cc;   /* warm linen — main bg */
-  --bg-soft:   #e6d9b8;   /* slightly darker — hover, cards */
-  --bg-dark:   #141210;   /* dark sections */
-  --bg-card:   #1c1916;   /* dark cards */
+  --bg:        #ede3cc;
+  --bg-soft:   #e6d9b8;
+  --bg-dark:   #141210;
+  --bg-card:   #1c1916;
 
-  --ink:       #1a1208;   /* primary text */
-  --ink-soft:  #6b5c3e;   /* secondary text */
-  --ink-muted: #a89880;   /* muted text */
+  --ink:       #1a1208;
+  --ink-soft:  #6b5c3e;
+  --ink-muted: #a89880;
 
-  --on-dark:       #f0e8d8;   /* text on dark bg */
-  --on-dark-muted: #6b5f4a;   /* muted text on dark bg */
+  --on-dark:       #f0e8d8;
+  --on-dark-muted: #6b5f4a;
 
-  --accent:    #c8430a;   /* burnt orange */
-  --accent-hov:#a83508;   /* darker hover */
+  --accent:    #c8430a;
+  --accent-hov:#a83508;
 
-  --line:      rgba(26,18,8,0.10);   /* border on light */
-  --line-dark: rgba(240,232,216,0.08); /* border on dark */
+  --line:      rgba(26,18,8,0.10);
+  --line-dark: rgba(240,232,216,0.08);
 
   --font-display: 'Bebas Neue', sans-serif;
   --font-serif:   'DM Serif Display', serif;
   --font-body:    'Inter', sans-serif;
 }
 
-* { box-sizing: border-box; }
+/* DARK THEME */
+.dark {
+  --bg:        #111111;
+  --bg-soft:   #1a1a1a;
+  --bg-dark:   #0a0a0a;
+  --bg-card:   #161616;
 
-html { scroll-behavior: smooth; }
+  --ink:       #f0e8d8;
+  --ink-soft:  #a89880;
+  --ink-muted: #5a4f42;
+
+  --on-dark:       #f0e8d8;
+  --on-dark-muted: #5a4f42;
+
+  --accent:    #c8430a;
+  --accent-hov:#a83508;
+
+  --line:      rgba(240,232,216,0.08);
+  --line-dark: rgba(240,232,216,0.06);
+
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-serif:   'DM Serif Display', serif;
+  --font-body:    'Inter', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   background: var(--bg);
   color: var(--ink);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 /* custom scrollbar */
-::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; }
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 4px;
+}

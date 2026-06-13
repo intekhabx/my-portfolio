@@ -43,11 +43,11 @@ const categories = [
 const allTags = [
   "#javascript", "#typescript", "#react", "#nextjs",
   "#nodejs", "#express", "#mongodb", "#postgresql",
-  "#restapi", "#graphql", "#websocket", "#socketio",
-  "#tailwind", "#html5", "#css3", "#git",
-  "#docker", "#redis", "#vercel", "#fullstack",
-  "#mern", "#mongoose", "#drizzle", "#jwt",
-  "#zod", "#joi", "#prisma", "#jwt-auth"
+  "#rest-api", "#sql", "#websocket", "#socketio",
+  "#tailwind", "#html5", "#css3", "#git", "#github", 
+  "#docker", "#redis", "#kafka", "#vercel",
+  "#figma", "#mongoose", "#drizzle", "#jwt",
+  "#zod", "#joi", "#prisma", 
 ];
 
 const levelColor: Record<string, string> = {
@@ -95,7 +95,7 @@ export default function TechStack() {
             </p>
 
             {/* Skills */}
-            <ul className="flex flex-col gap-4 font-extrabold font-mono">
+            <ul className="flex flex-col gap-4 font-extrabold font-mono cursor-auto">
               {cat.skills.map((skill) => (
                 <li key={skill.name} className="flex items-center gap-3 group">
 
@@ -138,7 +138,7 @@ export default function TechStack() {
           {allTags.map((tag) => (
             <span
               key={tag}
-              className="border border-[var(--line)] text-[11px] px-3 py-1.5 text-[var(--ink-muted)] hover:text-[var(--ink)] hover:border-[var(--ink-soft)] transition"
+              className="border border-[var(--line)] text-[11px] px-3 py-1.5 text-[var(--ink-soft)] hover:text-[var(--ink)] hover:border-[var(--ink-soft)] transition cursor-default"
             >
               {tag}
             </span>

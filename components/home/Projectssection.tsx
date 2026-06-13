@@ -1,5 +1,3 @@
-// components/ProjectsSection.tsx
-// SERVER COMPONENT — receives projects from page.tsx (fetched server-side)
 
 interface Project {
   _id: string;
@@ -18,47 +16,50 @@ export default function ProjectsSection({ projects }: Props) {
   return (
     <section
       id="work"
-      className="w-full"
-      style={{ borderBottom: "1px solid var(--line)" }}
+      className="w-full border-b border-[var(--line)]"
     >
-      {/* Header */}
+      {/* ── Section Header ── */}
       <div
-        className="flex items-baseline justify-between px-12 py-6"
+        className="flex items-center gap-5 px-4 py-5 md:px-12"
         style={{ borderBottom: "1px solid var(--line)" }}
       >
-        <h2
-          className="text-[28px] tracking-[-0.5px]"
-          style={{ fontFamily: "var(--font-serif)", color: "var(--ink)" }}
-        >
-          Selected Work
-        </h2>
         <span
-          className="text-[11px] tracking-[3px] uppercase"
+          className="text-[11px] tracking-[3px] shrink-0"
           style={{ color: "var(--ink-muted)", fontFamily: "var(--font-display)" }}
         >
-          {String(projects.length).padStart(2, "0")} Projects
+          02
         </span>
+        <span style={{ color: "var(--ink-muted)", fontSize: "11px" }}>—</span>
+        <h2
+          className="text-[28px] md:text-[36px] tracking-[-1px]"
+          style={{ fontFamily: "var(--font-display)", color: "var(--ink)" }}
+        >
+          Selected <em className="italic" style={{ color: "var(--accent)" }}>Work</em>
+        </h2>
+        <div
+          className="hidden md:block flex-1 h-px ml-4"
+          style={{ background: "var(--line)" }}
+        />
       </div>
 
-      {/* Rows */}
-      <div className="flex flex-col">
-        {projects.length === 0 ? (
-          <p className="px-12 py-10 text-[13px] text-[var(--ink-muted)]">
-            No projects yet — add from admin dashboard.
-          </p>
-        ) : (
-          projects.map((project, i) => (
-            <ProjectRow key={project._id} project={project} index={i} />
-          ))
-        )}
-      </div>
+      {/* ── Cards Grid ── */}
+      {projects.length === 0 ? (
+        <p className="px-4 py-10 text-[13px] md:px-12" style={{ color: "var(--ink-muted)" }}>
+          No projects yet — add from admin dashboard.
+        </p>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2">
+          {projects.map((project, i) => (
+            <ProjectCard key={project._id} project={project} index={i} />
+          ))}
+        </div>
+      )}
     </section>
   );
 }
 
-// ── Individual row — client for hover
-import ProjectRowClient from "./Projectrowclient";
+import ProjectCardClient from "./Projectrowclient";
 
-function ProjectRow({ project, index }: { project: Project; index: number }) {
-  return <ProjectRowClient project={project} index={index} />;
+function ProjectCard({ project, index }: { project: Project; index: number }) {
+  return <ProjectCardClient project={project} index={index} />;
 }

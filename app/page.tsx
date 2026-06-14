@@ -11,6 +11,9 @@ import Footer from "@/components/home/Footer";
 import dbConnection from "@/lib/db";
 import { projectModel } from "@/models/project.model";
 import TechStack from "@/components/home/Techstack";
+import Playground from "@/components/playground/Playground";
+import MernStack from "@/components/home/Mernstack";
+import SocialBanner from "@/components/home/Socialbanner";
 
 export const revalidate = 60; // ISR — rebuild every 60 seconds
  
@@ -37,10 +40,12 @@ export default async function HomePage() {
       {/* Main content — offset by sidebar width (52px) */}
       <main className="flex-1 flex flex-col md:ml-[52px]">
         <HeroSection />
+        <MernStack />
         <TechStack />
         <ProjectsSection projects={projects} />
         <AboutSection />
         <ContactSection />
+        <SocialBanner />
         <Footer />
       </main>
  

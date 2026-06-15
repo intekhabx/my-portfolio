@@ -5,7 +5,7 @@
 :root {
   --bg:        #EEEAE3;
   --bg-soft:   #ebe4d6;
-  --bg-dark:   #141210;
+  --bg-dark:   #111519;
   --bg-card:   #1c1916;
 
   --ink:       #1a1208;
@@ -30,7 +30,7 @@
 .dark {
   --bg:        #111111;
   --bg-soft:   #1a1a1a;
-  --bg-dark:   #0a0a0a;
+  --bg-dark:   #111519;
   --bg-card:   #161616;
 
   --ink:       #f0e8d8;

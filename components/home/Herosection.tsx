@@ -3,7 +3,6 @@
 
 import HeroTopBar from "./Herotopbar";
 import HeroMiddle from "./Heromiddle";
-import HeroBottomBar from "./Herobottombar";
 
 export default function HeroSection() {
   return (
@@ -14,7 +13,6 @@ export default function HeroSection() {
     >
       <HeroTopBar />
       <HeroMiddle />
-      <HeroBottomBar />
     </section>
   );
 }

@@ -107,7 +107,7 @@ export default function ContactSection() {
 
         {/* RIGHT — Form */}
         <div className="bg-[var(--bg-dark)] px-5 py-10 md:px-12 md:py-14 flex flex-col justify-center">
-          <p className="mb-6 text-[9px] uppercase tracking-[3px] text-[var(--on-dark-muted)]">
+          <p className="mb-6 text-[9px] uppercase tracking-[3px] text-[var(--on-dark)]">
             Send a message
           </p>
 
@@ -132,7 +132,7 @@ export default function ContactSection() {
                 { name: "message", label: "Message", type: "textarea", placeholder: "Tell me about your project..." },
               ].map(({ name, label, type, placeholder }) => (
                 <div key={name}>
-                  <label className="mb-2 block text-[9px] uppercase tracking-[2px] text-[var(--on-dark-muted)]">
+                  <label className="mb-2 block text-[9px] uppercase tracking-[2px] text-[var(--on-dark)]">
                     {label}
                   </label>
                   {type === "textarea" ? (

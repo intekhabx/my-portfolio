@@ -11,9 +11,9 @@ import Footer from "@/components/home/Footer";
 import dbConnection from "@/lib/db";
 import { projectModel } from "@/models/project.model";
 import TechStack from "@/components/home/Techstack";
-import Playground from "@/components/playground/Playground";
 import MernStack from "@/components/home/Mernstack";
 import SocialBanner from "@/components/home/Socialbanner";
+import ContactIllustration from "@/components/home/Contactillustration";
 
 export const revalidate = 60; // ISR — rebuild every 60 seconds
  
@@ -45,6 +45,7 @@ export default async function HomePage() {
         <ProjectsSection projects={projects} />
         <AboutSection />
         <ContactSection />
+        <ContactIllustration />
         <SocialBanner />
         <Footer />
       </main>

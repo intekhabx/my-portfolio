@@ -14,7 +14,7 @@ const socials = [
 
 export default function SocialBanner() {
   return (
-    <div className="flex flex-col items-center justify-center gap-8 py-14 border-b border-[var(--line)]">
+    <div className="flex flex-col items-center justify-center gap-8 py-14 border-b border-[var(--line)] bg-[#111519] md:bg-inherit">
 
       {/* Logo / Monogram */}
       <div className="group relative">

@@ -129,7 +129,7 @@ export default function TechStack() {
       </div>
 
       {/* Tags */}
-      <div className="px-4 py-8 md:px-12">
+      {/* <div className="px-4 py-8 md:px-12">
         <p className="text-[9px] tracking-[3px] uppercase mb-5 text-[var(--ink-muted)]">
           All Technologies
         </p>
@@ -144,7 +144,7 @@ export default function TechStack() {
             </span>
           ))}
         </div>
-      </div>
+      </div> */}
 
     </section>
   );

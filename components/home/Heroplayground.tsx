@@ -358,7 +358,7 @@ export default function HeroPlayground() {
 
   return (
     /* outer wrapper: full-width on mobile, flex-1 on md+ */
-    <div className="md:w-[90%] w-full flex items-center justify-center px-4 md:px-0">
+    <div className="md:w-[90%] w-full flex items-center justify-center md:px-0">
       <div
         ref={constraintsRef}
         className="relative w-full overflow-hidden"

@@ -36,12 +36,12 @@ export default function MernStack() {
   const [activeTech, setActiveTech] = useState<string | null>(null);
 
   return (
-    <section className="flex flex-col items-center py-20 bg-[var(--bg-dark)]">
-      <h2 className="mb-16 text-4xl font-bold tracking-widest text-cyan-400">
+    <section className="flex flex-col items-center py-10 md:py-20 bg-[var(--bg-dark)]">
+      <h2 className="mb-10 md:mb-16 text-3xl md:text-4xl font-bold tracking-widest text-cyan-400">
         MERN STACK
       </h2>
 
-      <div className="flex flex-wrap justify-center gap-8 md:gap-14 px-4">
+      <div className="flex justify-center md:gap-14 px-1 md:px-4">
         {techs.map((tech, index) => {
           const Icon = tech.icon;
 
@@ -67,7 +67,7 @@ export default function MernStack() {
                 className={`
                   pointer-events-none
                   absolute
-                  -top-24
+                  -top-14
                   z-20
                   transition-all
                   duration-300
@@ -139,14 +139,14 @@ export default function MernStack() {
                 >
                   <Icon
                     color={tech.color}
-                    className="h-14 w-14 md:h-20 md:w-20 transition-all duration-300 group-hover:drop-shadow-[0_0_25px_currentColor]"
+                    className="h-12 w-12 md:h-20 md:w-20 transition-all duration-300 group-hover:drop-shadow-[0_0_25px_currentColor]"
                   />
                 </motion.div>
               </motion.div>
 
               {/* Bottom Letter */}
               <span
-                className="mt-4 text-3xl md:text-4xl font-bold"
+                className="mt-2 md:mt-4 text-2xl md:text-4xl font-bold"
                 style={{
                   color: tech.color,
                 }}

@@ -99,7 +99,7 @@ export default function TechStack() {
               {cat.skills.map((skill) => (
                 <li key={skill.name} className="flex items-center gap-3 group">
 
-                  <span className="text-[14px] text-[var(--ink-muted)]">
+                  <span className="text-[14px] text-[var(--ink-muted)] hidden md:flex">
                     •
                   </span>
 

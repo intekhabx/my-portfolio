@@ -5,26 +5,19 @@ import ThemeToggle from "./ThemeToggle";
 export default function HeroTopBar() {
   return (
     <div
-      className="flex items-center justify-between px-12 py-5"
+      className="flex items-center justify-between px-5 md:px-12 py-5"
       style={{ borderBottom: "1px solid var(--line)" }}
     >
-      <div className="flex justify-center items-center gap-2">
+      <div className="flex justify-center items-center">
         <Image
           src="/favicon.png"
           width={42}
           height={42}
           alt="logo"
         />
-
-        <p
-          className="mt-2 text-[11px] tracking-[3px] uppercase"
-          style={{ color: "var(--ink-muted)" }}
-        >
-          Full Stack Developer — MERN · Next.js
-        </p>
       </div>
 
-      <div className="flex items-center gap-6">
+      <div className="flex items-center gap-2 md:gap-6">
         <span
           className="text-[11px] tracking-[1px]"
           style={{ color: "var(--accent)" }}
@@ -32,11 +25,13 @@ export default function HeroTopBar() {
           ✦ Available for freelance
         </span>
 
-        <ThemeToggle />
+        <span>
+          <ThemeToggle />
+        </span>
 
         <Link
           href="#contact"
-          className="text-[10px] tracking-[2px] uppercase px-5 py-2 border transition-colors duration-200 text-[var(--accent)] hover:bg-[var(--accent)] hover:text-[var(--bg)] hover:border-[var(--accent)]"
+          className="text-[10px] tracking-[2px] uppercase px-3 py-1 md:px-5 md:py-2 border transition-colors duration-200 text-[var(--accent)] hover:bg-[var(--accent)] hover:text-[var(--bg)] hover:border-[var(--accent)]"
         >
           Hire Me
         </Link>

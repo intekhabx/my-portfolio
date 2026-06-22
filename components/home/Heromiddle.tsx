@@ -5,7 +5,7 @@ import HeroPlayground from "./Heroplayground";
 
 export default function HeroMiddle() {
   return (
-    <div className="flex flex-col md:flex-row items-center md:justify-between gap-10">
+    <div className="flex flex-col md:flex-row items-center md:justify-between mb-12">
       
       {/* LEFT */}
       <div className="flex flex-col justify-center px-6 py-12 md:px-12 md:py-16">
@@ -36,7 +36,7 @@ export default function HeroMiddle() {
         <div className="flex flex-wrap gap-3">
           <Link
             href="#work"
-            className="bg-[var(--ink)] text-[var(--bg)] no-underline px-8 py-3 text-[11px] uppercase tracking-[2px] transition-colors duration-200 hover:bg-[var(--accent)] hover:text-white"
+            className="bg-[var(--ink)] text-[var(--bg)] no-underline px-5 md:px-8 py-3 text-[11px] uppercase tracking-[2px] transition-colors duration-200 hover:bg-[var(--accent)] hover:text-white"
           >
             View Projects
           </Link>
@@ -45,7 +45,7 @@ export default function HeroMiddle() {
             href="/resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            className="border border-[var(--line)] bg-transparent px-8 py-3 text-[11px] uppercase tracking-[2px] text-[var(--ink-muted)] no-underline transition-all duration-200 hover:border-[var(--ink)] hover:text-[var(--ink)]"
+            className="border border-[var(--line)] bg-transparent px-5 md:px-8 py-3 text-[11px] uppercase tracking-[2px] text-[var(--ink-muted)] no-underline transition-all duration-200 hover:border-[var(--ink)] hover:text-[var(--ink)]"
           >
             Download CV
           </a>

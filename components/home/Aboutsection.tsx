@@ -28,7 +28,7 @@ export default function AboutSection() {
       </div>
 
       {/* Content */}
-      <div className="flex flex-col-reverse md:flex-row items-center justify-evenly gap-12 px-6 py-12 md:px-8 md:py-8">
+      <div className="flex flex-col-reverse md:flex-row items-center justify-evenly md:gap-12 px-6 md:px-8 py-8">
         {/* Left Side */}
         <div className="max-w-xl">
           <blockquote
@@ -88,13 +88,13 @@ export default function AboutSection() {
         </div>
 
         {/* Right Side - Only Image */}
-        <div className="relative h-[480px] w-[550px]">
+        <div className="relative h-[300px] md:h-[480px] w-[550px]">
           <Image
             src="/programmer.png"
             alt="Intekhab"
             fill
             priority
-            className="object-cover"
+            className="object-contain md:object-cover"
           />
         </div>
       </div>

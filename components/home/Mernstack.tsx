@@ -37,7 +37,7 @@ export default function MernStack() {
 
   return (
     <section className="flex flex-col items-center py-10 md:py-20 bg-[var(--bg-dark)]">
-      <h2 className="mb-10 md:mb-16 text-3xl md:text-4xl font-bold tracking-widest text-cyan-400">
+      <h2 className="mb-10 md:mb-16 text-xl md:text-4xl font-bold tracking-widest text-cyan-400">
         MERN STACK
       </h2>
 
@@ -79,7 +79,7 @@ export default function MernStack() {
                 `}
               >
                 <div
-                  className="rounded-full px-5 py-3 shadow-2xl whitespace-nowrap"
+                  className="rounded-full px-5 py-2 md:py-3 shadow-2xl whitespace-nowrap"
                   style={{
                     backgroundColor: tech.color,
                   }}
@@ -139,14 +139,14 @@ export default function MernStack() {
                 >
                   <Icon
                     color={tech.color}
-                    className="h-12 w-12 md:h-20 md:w-20 transition-all duration-300 group-hover:drop-shadow-[0_0_25px_currentColor]"
+                    className="h-10 w-10 md:h-20 md:w-20 transition-all duration-300 group-hover:drop-shadow-[0_0_25px_currentColor]"
                   />
                 </motion.div>
               </motion.div>
 
               {/* Bottom Letter */}
               <span
-                className="mt-2 md:mt-4 text-2xl md:text-4xl font-bold"
+                className="mt-2 md:mt-4 text-xl md:text-4xl font-bold"
                 style={{
                   color: tech.color,
                 }}

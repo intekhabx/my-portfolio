@@ -5,7 +5,7 @@ import ThemeToggle from "./ThemeToggle";
 export default function HeroTopBar() {
   return (
     <div
-      className="flex items-center justify-between px-5 md:px-12 py-5"
+      className="flex items-center justify-between px-5 md:px-12 py-3 md:py-5"
       style={{ borderBottom: "1px solid var(--line)" }}
     >
       <div className="flex justify-center items-center">
@@ -17,9 +17,9 @@ export default function HeroTopBar() {
         />
       </div>
 
-      <div className="flex items-center gap-2 md:gap-6">
+      <div className="flex items-center gap-4 md:gap-6">
         <span
-          className="text-[11px] tracking-[1px]"
+          className="text-[11px] tracking-[1px] hidden md:flex"
           style={{ color: "var(--accent)" }}
         >
           ✦ Available for freelance

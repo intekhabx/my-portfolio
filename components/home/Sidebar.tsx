@@ -130,7 +130,7 @@ export default function Sidebar() {
 }
 
 function MobileNavIcon({ label }: { label: string }) {
-  const cls = "w-[34px] h-[34px]";
+  const cls = "w-[22px] h-[22px]";
 
   switch (label) {
     case "HOME":

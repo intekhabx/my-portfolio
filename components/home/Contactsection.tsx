@@ -162,7 +162,7 @@ export default function ContactSection() {
               <button
                 type="submit"
                 disabled={status === "loading"}
-                className="self-start mt-2 bg-[var(--accent)] px-8 py-3 text-[10px] uppercase tracking-[2px] text-white transition-all hover:bg-white hover:text-[var(--accent)] disabled:cursor-not-allowed disabled:opacity-50"
+                className="self-start mt-2 bg-[var(--accent)] px-8 py-3 text-[10px] uppercase tracking-[2px] text-white transition-all hover:bg-white hover:text-[var(--accent)] disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer"
               >
                 {status === "loading" ? "Sending..." : "Send Message →"}
               </button>

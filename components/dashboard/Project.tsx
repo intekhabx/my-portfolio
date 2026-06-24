@@ -55,6 +55,30 @@ const Project = () => {
     getAllProject();
   }, []);
 
+  
+    useEffect(() => {
+    let errorTimeout: ReturnType<typeof setTimeout>;
+    let successTimeout: ReturnType<typeof setTimeout>;
+    if(error){
+      errorTimeout = setTimeout(()=> {
+        setError("")
+      }, 4000)
+    }
+
+    if(success){
+      successTimeout = setTimeout(()=> {
+        setSuccess("");
+      }, 4000)
+    }
+
+    return ()=> {
+      if(errorTimeout) clearTimeout(errorTimeout);
+      if(successTimeout) clearTimeout(successTimeout);
+    }
+
+  }, [error, success]);
+
+
   if (loading) {
     return (
       <div className="flex min-h-[300px] items-center justify-center">

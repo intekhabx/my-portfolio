@@ -18,9 +18,9 @@ const TERMINAL_LINES = [
 ];
 
 const PROJECTS = [
-  { name: "Portfolio",     stack: "Next.js · Mongo",  status: "live" },
-  { name: "Chat App",      stack: "Socket · Express", status: "live" },
-  { name: "Expense Track", stack: "React · Node",     status: "wip"  },
+  { name: "secureAuth",     stack: "Express · Redis",  status: "live" },
+  { name: "iTry",      stack: "React · Express", status: "wip" },
+  { name: "FormWarts", stack: "Nextjs · Postgres",     status: "wip"  },
 ];
 
 const TAGS = ["React", "Node.js", "MongoDB", "Express"];

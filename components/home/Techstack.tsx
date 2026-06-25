@@ -95,7 +95,7 @@ export default function TechStack() {
             </p>
 
             {/* Skills */}
-            <ul className="flex flex-col gap-4 font-extrabold font-mono cursor-auto">
+            <ul className="flex flex-col gap-4 cursor-auto">
               {cat.skills.map((skill) => (
                 <li key={skill.name} className="flex items-center gap-3 group">
 
@@ -103,7 +103,7 @@ export default function TechStack() {
                     •
                   </span>
 
-                  <span className="text-[14px] font-medium tracking-[-0.2px] transition-colors group-hover:text-[var(--accent)]">
+                  <span className="text-[12px] md:text-[14px] font-medium tracking-[-0.2px] transition-colors group-hover:text-[var(--accent)]">
                     {skill.name}
                   </span>
 
@@ -115,7 +115,7 @@ export default function TechStack() {
                   </span>
 
                   <span
-                    className="text-[10px] uppercase tracking-[1px] shrink-0"
+                    className="text-[9px] md:text-[10px] uppercase tracking-[1px] shrink-0"
                     style={{ color: levelColor[skill.level] }}
                   >
                     {skill.level}

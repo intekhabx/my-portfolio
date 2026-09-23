@@ -23,9 +23,11 @@ import {
   SiJsonwebtokens,
   SiZod,
   SiPrisma,
+  SiTrpc,
 } from "react-icons/si";
 import { TbApi, TbDatabase } from "react-icons/tb";
 import { IconType } from "react-icons";
+import { BullMQIcon, InngestIcon } from "../Icons/icon";
 
 /* ── Skill data — icon + label + brand color ─────────────────── */
 interface Skill {
@@ -44,6 +46,7 @@ const skills: Skill[] = [
   { label: "MongoDB",    Icon: SiMongodb,       color: "#47A248" },
   { label: "PostgreSQL", Icon: SiPostgresql,    color: "#4169E1" },
   { label: "REST API",   Icon: TbApi,           color: "#1d9bf0" },
+  { label: "tRPC",       Icon: SiTrpc,          color: "#398CCB" },
   { label: "SQL",        Icon: TbDatabase,      color: "#60A5FA" },
   { label: "Socket.io",  Icon: SiSocketdotio,   color: "#FFFFFF" },
   { label: "Tailwind",   Icon: SiTailwindcss,   color: "#38BDF8" },
@@ -59,6 +62,8 @@ const skills: Skill[] = [
   { label: "JWT",        Icon: SiJsonwebtokens, color: "#FB015B" },
   { label: "Zod",        Icon: SiZod,           color: "#3E67B1" },
   { label: "Prisma",     Icon: SiPrisma,        color: "#FFFFFF" },
+  { label: "BullMQ",     Icon: BullMQIcon,      color: "#E63946" },
+  { label: "Inngest",    Icon: InngestIcon,     color: "#6366F1" },
 ];
 
 export default function SkillsMarquee() {

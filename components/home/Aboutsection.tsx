@@ -1,4 +1,5 @@
 import Image from "next/image";
+import MernStack from "./Mernstack";
 
 export default function AboutSection() {
   return (
@@ -32,7 +33,7 @@ export default function AboutSection() {
         {/* Left Side */}
         <div className="max-w-xl">
           <blockquote
-            className="mb-8 italic leading-[1.35] tracking-[-0.3px] text-[var(--ink)]"
+            className="mb-5 italic leading-[1.35] tracking-[-0.3px] text-[var(--ink)]"
             style={{
               fontFamily: "var(--font-serif)",
               fontSize: "clamp(22px, 3.5vw, 36px)",
@@ -44,13 +45,13 @@ export default function AboutSection() {
             <em className="text-[var(--accent)]">experiences.</em>"
           </blockquote>
 
-          <p className="mb-10 max-w-[500px] font-mono text-[13px] leading-[1.9] text-[var(--ink-soft)]">
+          <p className="mb-5 max-w-[500px] font-mono text-[13px] leading-[1.9] text-[var(--ink-soft)]">
             Passionate full stack developer from India. I love building
             products that are fast, scalable, and solve real problems.
             Always learning, always shipping clean code.
           </p>
 
-          <div className="flex flex-wrap gap-5">
+          {/* <div className="flex flex-wrap gap-5">
             {[
               {
                 label: "GitHub ↗",
@@ -75,9 +76,19 @@ export default function AboutSection() {
                 {label}
               </a>
             ))}
-          </div>
+          </div> */}
 
-          <div className="mt-12">
+          {/* MERN — origin story */}
+        <div className="mt-5 border-t border-[var(--line)] pt-4">
+          <p className="mb-2 text-[10px] tracking-[3px] uppercase text-[var(--ink-muted)]">
+            Where it started
+          </p>
+          <div className="w-full flex justify-center md:block">
+            <MernStack />
+          </div>
+        </div>
+
+          <div className="mt-8">
             <p
               className="text-xl italic text-[var(--accent)]"
               style={{ fontFamily: "var(--font-serif)" }}

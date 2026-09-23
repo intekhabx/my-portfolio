@@ -11,10 +11,10 @@ import Footer from "@/components/home/Footer";
 import dbConnection from "@/lib/db";
 import { projectModel } from "@/models/project.model";
 import TechStack from "@/components/home/Techstack";
-import MernStack from "@/components/home/Mernstack";
 import SocialBanner from "@/components/home/Socialbanner";
 import ContactIllustration from "@/components/home/Contactillustration";
 import SkillsMarquee from "@/components/home/Skillsmarquee";
+import DragableBox from "@/components/home/Dragbox";
 
 export const revalidate = 60; // ISR — rebuild every 60 seconds
  
@@ -41,7 +41,7 @@ export default async function HomePage() {
       {/* Main content — offset by sidebar width (52px) */}
       <main className="flex-1 min-w-0 flex flex-col md:ml-[52px] overflow-x-hidden">
         <HeroSection />
-        <MernStack />
+        <DragableBox />
         <TechStack />
         <SkillsMarquee />
         <ProjectsSection projects={projects} />

@@ -93,7 +93,7 @@ export default function SkillsMarquee() {
             }}
           >
             <Icon className="text-[16px] md:text-[18px] transition-transform duration-200 group-hover:scale-110" style={{ color }} />
-            <span className="text-[11px] md:text-[12px] whitespace-nowrap font-medium text-[var(--on-dark)] cursor-default">
+            <span className="text-[11px] md:text-[12px] whitespace-nowrap font-medium text-slate-200 cursor-default">
               {label}
             </span>
           </div>

@@ -10,7 +10,6 @@ interface StepItem {
   icon: React.FC<React.SVGProps<SVGSVGElement>>;
   accent: string;
   staggerClass: string;
-  // mobile absolute position (used only below sm breakpoint)
   mobilePos: { top: number; left?: number; right?: number };
   mobileSize: { w: number };
 }
@@ -19,27 +18,29 @@ interface CardPos { x: number; y: number; w: number; h: number }
 type CardPositions = Record<string, CardPos>;
 interface ConnectionLinesProps { cardPositions: CardPositions; draggingId: string | null }
 
-/* ─── Icons (unchanged) ──────────────────────────────── */
+/* ─── Icons ────────────────────────────────────────────── */
 const PlanIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
     <path d="M12 2a6 6 0 0 0-6 6c0 2.5 1.5 4.7 3.5 5.6V16a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-2.4c2-.9 3.5-3.1 3.5-5.6a6 6 0 0 0-6-6z"/>
     <path d="M10 20h4"/><path d="M11 22h2"/>
   </svg>
 );
 const BuildIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-    <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <polyline points="7 18 1 12 7 6" />
+    <polyline points="17 6 23 12 17 18" />
+    <path d="M14 3L10 21" />
   </svg>
 );
 const IntegrateIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
     <ellipse cx="12" cy="5" rx="9" ry="3"/>
     <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
     <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
   </svg>
 );
 const DeployIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
     <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/>
     <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/>
     <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/>
@@ -49,26 +50,86 @@ const DeployIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
 
 const STEPS: StepItem[] = [
   {
-    id: "plan", title: "Plan", description: "Requirements & architecture design",
+    id: "plan", title: "Plan", description: "Requirements & Design",
     icon: PlanIcon, accent: "#38bdf8", staggerClass: "lg:translate-y-3",
-    mobilePos: { top: 22, left: 28 }, mobileSize: { w: 148 },
+    mobilePos: { top: 25, left: 35 }, mobileSize: { w: 170 },
   },
   {
-    id: "build", title: "Build", description: "Frontend + backend development",
+    id: "build", title: "Build", description: "Frontend + Backend development",
     icon: BuildIcon, accent: "#3b82f6", staggerClass: "lg:translate-y-14",
-    mobilePos: { top: 100, right: 20 }, mobileSize: { w: 155 },
+    mobilePos: { top: 185, right: 40 }, mobileSize: { w: 175 },
   },
   {
-    id: "integrate", title: "Integrate", description: "APIs, DB & real-time features",
+    id: "integrate", title: "Integrate", description: "APIs, DB & Tools",
     icon: IntegrateIcon, accent: "#22c55e", staggerClass: "lg:-translate-y-3",
-    mobilePos: { top: 260, left: 35 }, mobileSize: { w: 158 },
+    mobilePos: { top: 345, left: 35 }, mobileSize: { w: 178 },
   },
   {
     id: "deploy", title: "Deploy", description: "CI/CD, containerize & ship",
     icon: DeployIcon, accent: "#ec4899", staggerClass: "lg:translate-y-10",
-    mobilePos: { top: 420, right: 48 }, mobileSize: { w: 148 },
+    mobilePos: { top: 510, right: 48 }, mobileSize: { w: 170 },
   },
 ];
+
+/* ─── Custom Inner Visual Structures ─────────────────────── */
+const CardInnerVisual: React.FC<{ id: string; accent: string; description: string }> = ({ id, accent, description }) => {
+  if (id === "plan") {
+    return (
+      <div className="flex flex-col gap-1.5 p-2 rounded bg-[#c2ecff]/10 border border-white/5">
+        <div className="flex items-center gap-1.5">
+          <div className="w-2 h-2 rounded-full" style={{ backgroundColor: accent }} />
+          <div className="h-1.5 w-12 rounded bg-white/20" />
+          <div className="h-1.5 w-6 rounded bg-white/10 ml-auto" />
+        </div>
+        <div className="h-1.5 w-full rounded bg-white/10" />
+        <p className="text-[10px] font-mono text-slate-400 leading-tight mt-1">{description}</p>
+      </div>
+    );
+  }
+  if (id === "build") {
+    return (
+      <div className="flex flex-col gap-1.5 p-2 rounded bg-[#0d1322]/60 border border-white/5">
+        <div className="flex items-center justify-between">
+          <div className="flex gap-1">
+            <div className="w-1.5 h-1.5 rounded-full bg-red-400/60" />
+            <div className="w-1.5 h-1.5 rounded-full bg-yellow-400/60" />
+            <div className="w-1.5 h-1.5 rounded-full bg-green-400/60" />
+          </div>
+          <span className="text-[8px] font-mono text-slate-500">v1.0.0</span>
+        </div>
+        <p className="text-[10px] font-mono text-slate-400 leading-tight mt-0.5">{description}</p>
+      </div>
+    );
+  }
+  if (id === "integrate") {
+    return (
+      <div className="flex flex-col gap-1.5 p-2 rounded bg-[#181A23]/50 border border-white/5">
+        <div className="flex items-center justify-between border-b border-white/5 pb-1">
+          <div className="flex items-center gap-1">
+            <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: accent }} />
+            <span className="text-[9px] font-mono text-slate-300">REST / tRPC</span>
+          </div>
+          <span className="text-[8px] font-mono px-1 rounded bg-green-500/20 text-green-400">200 OK</span>
+        </div>
+        <p className="text-[10px] font-mono text-slate-400 leading-tight mt-0.5">{description}</p>
+      </div>
+    );
+  }
+  return (
+    <div className="flex flex-col gap-1.5 p-2 rounded bg-[#efd2e1]/10 border border-white/5">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-1">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke={accent} strokeWidth="2.5">
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+          <span className="text-[9px] font-mono text-slate-300">Deployed</span>
+        </div>
+        <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: accent }} />
+      </div>
+      <p className="text-[10px] font-mono text-slate-400 leading-tight mt-0.5">{description}</p>
+    </div>
+  );
+};
 
 /* ─── Connection Lines (logic unchanged) ─────────────── */
 const ConnectionLines: React.FC<ConnectionLinesProps> = ({ cardPositions, draggingId }) => {
@@ -121,9 +182,9 @@ const ConnectionLines: React.FC<ConnectionLinesProps> = ({ cardPositions, draggi
         const isDragging = draggingId === conn.from || draggingId === conn.to;
         return (
           <g key={conn.id}>
-            <path d={path} fill="none" stroke={conn.color} strokeWidth={isDragging ? "6" : "3.5"} opacity={isDragging ? 0.35 : 0.12}/>
-            <path d={path} fill="none" stroke={conn.color} strokeWidth={isDragging ? 2.5 : 1.8}
-              strokeDasharray={isDragging ? "none" : "6 4"} markerEnd={`url(#arrow-${conn.id})`}
+            <path d={path} fill="none" stroke={conn.color} strokeWidth={isDragging ? "5" : "2.5"} opacity={isDragging ? 0.35 : 0.15}/>
+            <path d={path} fill="none" stroke={conn.color} strokeWidth={isDragging ? 2 : 1.5}
+              strokeDasharray={isDragging ? "none" : "4 4"} markerEnd={`url(#arrow-${conn.id})`}
               opacity={isDragging ? 1 : 0.85}/>
           </g>
         );
@@ -196,25 +257,35 @@ export default function DragableBox() {
     };
   }, [updatePositions]);
 
-  // mobile container height = last card top + card height + padding
-  const MOBILE_HEIGHT = 390 + 140 + 24;
+  const MOBILE_HEIGHT = 500 + 140 + 24;
 
   return (
-    <div className="w-full flex items-center justify-center font-sans select-none text-slate-100">
+    <div className="w-full flex items-center justify-center font-sans select-none text-slate-100 p-2 sm:p-4">
       <div
         ref={containerRef}
-        className="relative w-full max-w-7xl rounded-2xl border border-white/10 bg-[#101217] shadow-2xl overflow-hidden"
+        className="relative w-full max-w-7xl rounded-2xl border border-cyan-500/10 shadow-2xl overflow-hidden"
         style={{
-          // mobile: fixed height for absolute layout; sm+: auto
-          minHeight: isMobile ? MOBILE_HEIGHT : 280,
-          padding: isMobile ? 0 : undefined,
+          minHeight: isMobile ? MOBILE_HEIGHT : 320,
+          backgroundColor: "#0b0c10",
+          backgroundImage: `radial-gradient(rgba(56, 189, 248, 0.15) 1px, transparent 1px)`,
+          backgroundSize: "22px 22px",
         }}
-        // sm+ padding via className
       >
-        <div className={isMobile ? "" : "px-4 py-6 sm:px-8 sm:py-8 lg:px-12 lg:py-10 flex items-center justify-center"}>
+        {/* Top-right "Drag the cards" pill badge */}
+        <div className="absolute top-4 right-4 z-30 hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full border border-cyan-500/20 bg-[#101726]/80 backdrop-blur-md text-xs text-zinc-300/80 font-mono">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"/>
+            <path d="M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v6"/>
+            <path d="M10 10.5V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v8"/>
+            <path d="M18 8a2 2 0 0 1 2 2v4a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/>
+          </svg>
+          Drag the cards
+        </div>
+
+        <div className={isMobile ? "" : "px-4 py-8 sm:px-8 sm:py-12 lg:px-12 lg:py-14 flex items-center justify-center"}>
           <ConnectionLines cardPositions={cardPositions} draggingId={draggingId} />
 
-          {/* ── MOBILE: absolute positioned ── */}
+          {/* ── MOBILE: ── */}
           {isMobile ? (
             <div className="relative w-full" style={{ height: MOBILE_HEIGHT }}>
               {STEPS.map((step) => {
@@ -244,37 +315,43 @@ export default function DragableBox() {
                       }}
                       onDrag={() => handleDragUpdate()}
                       onDragEnd={() => { setDraggingId(null); startSnapBackTracking(); }}
-                      whileHover={{ scale: 1.03 }}
-                      className="w-full cursor-grab active:cursor-grabbing rounded-xl p-3.5 flex flex-col items-center text-center select-none"
+                      whileHover={{ scale: 1.02 }}
+                      className="w-full cursor-grab active:cursor-grabbing rounded-xl overflow-hidden select-none transition-shadow"
                       style={{
-                        backgroundColor: "rgba(22,25,33,0.95)",
-                        backdropFilter: "blur(12px)",
-                        border: isCardDragging ? `1.5px solid ${step.accent}` : "1px solid rgba(255,255,255,0.08)",
+                        backgroundColor: "#181A23",
+                        border: isCardDragging ? `2px solid ${step.accent}` : "1px solid rgba(255,255,255,0.12)",
                         boxShadow: isCardDragging
-                          ? `0 0 28px ${step.accent}55, 0 10px 24px rgba(0,0,0,0.5)`
-                          : "0 6px 18px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05)",
+                          ? `0 0 24px ${step.accent}66, 0 8px 20px rgba(0,0,0,0.6)`
+                          : "0 8px 20px rgba(0,0,0,0.5)",
                       }}
                     >
-                      <div className="w-10 h-10 rounded-lg flex items-center justify-center mb-2.5"
-                        style={{ backgroundColor: `${step.accent}18`, border: `1px solid ${step.accent}44`, color: step.accent }}>
-                        <Icon/>
+                      {/* Node Card Header */}
+                      <div className="flex items-center justify-between px-3.5 py-2.5 border-b border-white/5 bg-white/[0.03]">
+                        <span className="text-[11px] font-mono font-bold tracking-wider uppercase text-slate-200">
+                          {step.title}
+                        </span>
+                        <div style={{ color: step.accent }}>
+                          <Icon />
+                        </div>
                       </div>
-                      <h3 className="text-sm font-semibold text-white mb-1 tracking-tight">{step.title}</h3>
-                      <p className="text-[10px] text-zinc-400 leading-normal">{step.description}</p>
+                      {/* Node Card Body with SVG structure */}
+                      <div className="p-2.5">
+                        <CardInnerVisual id={step.id} accent={step.accent} description={step.description} />
+                      </div>
                     </motion.div>
                   </div>
                 );
               })}
             </div>
           ) : (
-            /* ── DESKTOP/TABLET: original grid ── */
+            /* ── DESKTOP/TABLET: grid ── */
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-12 relative z-20 w-full items-center">
               {STEPS.map((step) => {
                 const Icon = step.icon;
                 const isCardDragging = draggingId === step.id;
                 return (
                   <div key={step.id}
-                    className={`relative flex flex-col items-center w-full max-w-[165px] mx-auto transition-transform duration-300 ${step.staggerClass}`}>
+                    className={`relative flex flex-col items-center w-full max-w-[185px] mx-auto transition-transform duration-300 ${step.staggerClass}`}>
                     <motion.div
                       ref={(el) => { cardRefs.current[step.id] = el; }}
                       drag dragSnapToOrigin={true}
@@ -286,23 +363,29 @@ export default function DragableBox() {
                       }}
                       onDrag={() => handleDragUpdate()}
                       onDragEnd={() => { setDraggingId(null); startSnapBackTracking(); }}
-                      whileHover={{ scale: 1.03 }}
-                      className="w-full cursor-grab active:cursor-grabbing rounded-xl p-3.5 flex flex-col items-center text-center select-none"
+                      whileHover={{ scale: 1.02 }}
+                      className="w-full cursor-grab active:cursor-grabbing rounded-xl overflow-hidden select-none transition-shadow"
                       style={{
-                        backgroundColor: "rgba(22,25,33,0.95)",
-                        backdropFilter: "blur(12px)",
-                        border: isCardDragging ? `1.5px solid ${step.accent}` : "1px solid rgba(255,255,255,0.08)",
+                        backgroundColor: "#181A23",
+                        border: isCardDragging ? `2px solid ${step.accent}` : "1px solid rgba(255,255,255,0.12)",
                         boxShadow: isCardDragging
-                          ? `0 0 28px ${step.accent}55, 0 10px 24px rgba(0,0,0,0.5)`
-                          : "0 6px 18px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05)",
+                          ? `0 0 24px ${step.accent}66, 0 8px 20px rgba(0,0,0,0.6)`
+                          : "0 8px 20px rgba(0,0,0,0.5)",
                       }}
                     >
-                      <div className="w-10 h-10 rounded-lg flex items-center justify-center mb-2.5"
-                        style={{ backgroundColor: `${step.accent}18`, border: `1px solid ${step.accent}44`, color: step.accent }}>
-                        <Icon/>
+                      {/* Node Card Header */}
+                      <div className="flex items-center justify-between px-3.5 py-2.5 border-b border-white/5 bg-white/[0.03]">
+                        <span className="text-[11px] font-mono font-bold tracking-wider uppercase text-slate-200">
+                          {step.title}
+                        </span>
+                        <div style={{ color: step.accent }}>
+                          <Icon />
+                        </div>
                       </div>
-                      <h3 className="text-sm font-semibold text-white mb-1 tracking-tight">{step.title}</h3>
-                      <p className="text-[10px] text-zinc-400 leading-normal">{step.description}</p>
+                      {/* Node Card Body with SVG structure */}
+                      <div className="p-2.5">
+                        <CardInnerVisual id={step.id} accent={step.accent} description={step.description} />
+                      </div>
                     </motion.div>
                   </div>
                 );

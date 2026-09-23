@@ -154,7 +154,7 @@ export default function TechStack() {
                       {/* Skill name — always visible */}
                       <span
                         className="text-[12px] md:text-[14px] font-medium tracking-[-0.2px]"
-                        style={{ color: "var(--ink-soft)" }}
+                        style={{ color: "var(--on-dark)" }}
                       >
                         {skill.name}
                       </span>

@@ -1,12 +1,13 @@
 "use client";
 
-import { FaLinkedinIn, FaTwitter, FaInstagram, FaGithub } from "react-icons/fa";
+import { FaLinkedinIn, FaInstagram, FaGithub } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import Image from "next/image";
+import { FaXTwitter  } from "react-icons/fa6";
 
 const socials = [
   { icon: FaLinkedinIn, href: "https://www.linkedin.com/in/intekhabx/", label: "LinkedIn" },
-  { icon: FaTwitter, href: "https://x.com/intekhab_x", label: "Twitter" },
+  { icon: FaXTwitter , href: "https://x.com/intekhab_x", label: "X" },
   { icon: FaInstagram, href: "https://www.instagram.com/_intekhab.x/", label: "Instagram" },
   { icon: MdEmail, href: "mailto:intekhab118211989@gmail.com", label: "Email" },
   { icon: FaGithub, href: "https://github.com/intekhabx", label: "GitHub" },
@@ -33,7 +34,7 @@ export default function SocialBanner() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={label}
-            className="relative text-[var(--ink-soft)] transition-all duration-300 hover:text-blue-400 hover:-translate-y-1 hover:scale-125"
+            className="relative text-[var(--on-dark)] transition-all duration-300 hover:text-blue-400 hover:-translate-y-1 hover:scale-125"
           >
             <Icon size={24} />
           </a>

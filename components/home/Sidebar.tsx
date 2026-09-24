@@ -4,18 +4,16 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import {
   FiHome,
-  FiLayers,
   FiBriefcase,
   FiUser,
   FiMail,
 } from "react-icons/fi";
 
 const navLinks = [
-  { label: "HOME", href: "#home" },
-  // { label: "STACK",   href: "#stack"   },
-  { label: "WORK", href: "#work" },
-  { label: "ABOUT", href: "#about" },
-  { label: "CONTACT", href: "#contact" },
+  { label: "HOME", href: "#home", icon: FiHome },
+  { label: "WORK", href: "#work", icon: FiBriefcase },
+  { label: "ABOUT", href: "#about", icon: FiUser },
+  { label: "CONTACT", href: "#contact", icon: FiMail },
 ];
 
 export default function Sidebar() {
@@ -33,7 +31,7 @@ export default function Sidebar() {
         });
       },
       {
-        threshold: 0.5,
+        threshold: 0.4,
       }
     );
 
@@ -44,111 +42,116 @@ export default function Sidebar() {
 
   return (
     <>
+      {/* ── DESKTOP SIDEBAR (Floating Vertical Dock) ── */}
       <aside
         className="
-        hidden md:flex
-        fixed left-0 top-0 z-50
-        h-screen w-[52px]
-        flex-col items-center justify-between
-        border-r border-[var(--line-dark)] bg-[var(--bg-dark)]
-        py-6
-      "
+          hidden md:flex
+          fixed left-4 top-1/2 -translate-y-1/2 z-50
+          h-[88vh] w-[56px]
+          flex-col items-center justify-between
+          rounded-2xl border border-[var(--line-dark)] 
+          bg-[var(--bg-dark)]/90 backdrop-blur-xl
+          py-6 shadow-[0_8px_32px_rgba(0,0,0,0.3)]
+          transition-all duration-300 hover:border-[var(--accent)]/30
+        "
       >
-        {/* Name */}
-        <span
-          style={{ fontWeight: "bold" }}
-          className="rotate-180 [writing-mode:vertical-rl] text-[11px] tracking-[4px] text-[var(--on-dark)] font-[var(--font-body)]"
-        >
-          INTEKHAB
-        </span>
+        {/* Top Logo / Brand Name */}
+        <div className="flex flex-col items-center gap-2">
+          <span
+            className="rotate-180 [writing-mode:vertical-rl] text-[10px] font-mono tracking-[4px] font-bold text-slate-200 opacity-90 select-none"
+          >
+            INTEKHABx<span className="text-[var(--accent)]">.DEV</span>
+          </span>
+        </div>
 
-        {/* Nav Links */}
-        <nav className="flex flex-col items-center gap-7">
-          {navLinks.map((link) => (
-            <Link
-              key={link.label}
-              href={link.href}
-              className={`
-                rotate-180 [writing-mode:vertical-rl]
-                text-[8px] tracking-[2px]
-                no-underline transition-colors duration-200
-                font-[var(--font-body)]
-                ${
-                  activeSection === link.href.slice(1)
-                    ? "text-[var(--accent)]"
-                    : "text-[var(--on-dark-muted)] hover:text-[var(--accent)]"
-                }
-              `}
-            >
-              {link.label}
-            </Link>
-          ))}
+        {/* Navigation Links */}
+        <nav className="flex flex-col items-center gap-8 my-auto">
+          {navLinks.map((link) => {
+            const isActive = activeSection === link.href.slice(1);
+            return (
+              <div key={link.label} className="relative group flex items-center">
+                <Link
+                  href={link.href}
+                  className={`
+                    relative flex items-center justify-center
+                    rotate-180 [writing-mode:vertical-rl]
+                    text-[9px] font-mono tracking-[2.5px] font-medium
+                    no-underline transition-all duration-300
+                    py-1.5 px-0.5 rounded-sm
+                    ${
+                      isActive
+                        ? "text-[var(--accent)] font-semibold"
+                        : "text-[var(--on-dark-muted)] hover:text-[var(--on-dark)]"
+                    }
+                  `}
+                >
+                  {link.label}
+                </Link>
+
+                {/* Active Bar Indicator */}
+                {isActive && (
+                  <span className="absolute -right-3 top-1/2 -translate-y-1/2 w-1 h-4 rounded-full bg-[var(--accent)] shadow-[0_0_8px_var(--accent)]" />
+                )}
+              </div>
+            );
+          })}
         </nav>
 
-        {/* Status dot */}
-        <div className="flex flex-col items-center gap-2">
-          <div className="h-2 w-2 animate-pulse rounded-full bg-green-500" />
-          <span className="rotate-180 [writing-mode:vertical-rl] text-[7px] tracking-[2px] text-[var(--on-dark-muted)]">
-            OPEN
+        {/* Bottom Live Availability Badge */}
+        <div className="flex flex-col items-center gap-2 group relative cursor-pointer">
+          <div className="relative flex h-2.5 w-2.5 items-center justify-center">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+          </div>
+
+          <span className="rotate-180 [writing-mode:vertical-rl] text-[7.5px] font-mono tracking-[2px] text-[var(--on-dark-muted)] group-hover:text-emerald-400 transition-colors">
+            LIVE
           </span>
         </div>
       </aside>
 
-      <nav
-        className="
-        md:hidden
-        fixed bottom-0 left-0 right-0 z-50
-        flex items-center justify-around
-        border-t border-[var(--line-dark)] bg-[var(--bg-dark)]
-        px-2 py-3
-      "
-      >
-        {navLinks.map((link) => (
-          <Link
-            key={link.label}
-            href={link.href}
-            className={`
-              flex flex-col items-center gap-[3px]
-              text-[7.5px] tracking-[1.5px]
-              no-underline transition-colors duration-200
-              font-[var(--font-body)]
-              px-3 py-1
-              ${
-                activeSection === link.href.slice(1)
-                  ? "text-[var(--accent)]"
-                  : "text-[var(--on-dark-muted)] hover:text-[var(--accent)]"
-              }
-            `}
-          >
-            <MobileNavIcon label={link.label} />
-            {link.label}
-          </Link>
-        ))}
-      </nav>
+      {/* ── MOBILE NAVIGATION (Floating Glass Bottom Pill Bar) ── */}
+      <div className="md:hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-[360px]">
+        <nav
+          className="
+            flex items-center justify-around
+            rounded-full border border-[var(--line-dark)]
+            bg-[var(--bg-dark)]/85 backdrop-blur-xl
+            px-3 py-2 shadow-[0_10px_25px_rgba(0,0,0,0.4)]
+          "
+        >
+          {navLinks.map((link) => {
+            const isActive = activeSection === link.href.slice(1);
+            const Icon = link.icon;
+
+            return (
+              <Link
+                key={link.label}
+                href={link.href}
+                className={`
+                  relative flex flex-col items-center gap-1
+                  text-[8px] font-mono tracking-[1px]
+                  no-underline transition-all duration-200
+                  px-3 py-1.5 rounded-full
+                  ${
+                    isActive
+                      ? "text-[var(--accent)] bg-[var(--accent)]/10"
+                      : "text-[var(--on-dark-muted)] hover:text-[var(--on-dark)]"
+                  }
+                `}
+              >
+                <Icon className="w-4 h-4" />
+                <span>{link.label}</span>
+
+                {/* Mobile Active Dot Indicator */}
+                {isActive && (
+                  <span className="absolute -top-1 w-1 h-1 rounded-full bg-[var(--accent)] shadow-[0_0_6px_var(--accent)]" />
+                )}
+              </Link>
+            );
+          })}
+        </nav>
+      </div>
     </>
   );
-}
-
-function MobileNavIcon({ label }: { label: string }) {
-  const cls = "w-[22px] h-[22px]";
-
-  switch (label) {
-    case "HOME":
-      return <FiHome className={cls} />;
-
-    // case "STACK":
-    //   return <FiLayers className={cls} />;
-
-    case "WORK":
-      return <FiBriefcase className={cls} />;
-
-    case "ABOUT":
-      return <FiUser className={cls} />;
-
-    case "CONTACT":
-      return <FiMail className={cls} />;
-
-    default:
-      return null;
-  }
 }

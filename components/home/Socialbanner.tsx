@@ -15,7 +15,7 @@ const socials = [
 
 export default function SocialBanner() {
   return (
-    <div className="flex flex-col items-center justify-center gap-8 py-14 border-b border-[var(--line)] bg-[#111519] md:bg-inherit">
+    <div className="flex flex-col items-center justify-center gap-8 py-14 border-b border-[var(--line)] bg-inherit">
 
       {/* Logo / Monogram */}
       <div className="group relative">
@@ -34,7 +34,7 @@ export default function SocialBanner() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={label}
-            className="relative text-[var(--on-dark)] transition-all duration-300 hover:text-blue-400 hover:-translate-y-1 hover:scale-125"
+            className="relative text-[var(--on-dark)] transition-all duration-400 hover:text-blue-400 hover:-translate-y-1 hover:scale-110"
           >
             <Icon size={24} />
           </a>

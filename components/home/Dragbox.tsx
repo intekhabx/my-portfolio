@@ -318,6 +318,7 @@ export default function DragableBox() {
                       whileHover={{ scale: 1.02 }}
                       className="w-full cursor-grab active:cursor-grabbing rounded-xl overflow-hidden select-none transition-shadow"
                       style={{
+                        touchAction: "none",
                         backgroundColor: "#181A23",
                         border: isCardDragging ? `2px solid ${step.accent}` : "1px solid rgba(255,255,255,0.12)",
                         boxShadow: isCardDragging
@@ -366,6 +367,7 @@ export default function DragableBox() {
                       whileHover={{ scale: 1.02 }}
                       className="w-full cursor-grab active:cursor-grabbing rounded-xl overflow-hidden select-none transition-shadow"
                       style={{
+                        touchAction: "none",
                         backgroundColor: "#181A23",
                         border: isCardDragging ? `2px solid ${step.accent}` : "1px solid rgba(255,255,255,0.12)",
                         boxShadow: isCardDragging

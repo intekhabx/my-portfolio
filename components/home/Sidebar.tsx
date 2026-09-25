@@ -81,7 +81,7 @@ export default function Sidebar() {
                     ${
                       isActive
                         ? "text-[var(--accent)] font-semibold"
-                        : "text-[var(--on-dark-muted)] hover:text-[var(--on-dark)]"
+                        : "text-slate-300 hover:text-[var(--accent)]"
                     }
                   `}
                 >

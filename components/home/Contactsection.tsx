@@ -49,26 +49,34 @@ export default function ContactSection() {
     <section id="contact" className="border-t border-[var(--line)] py-8 sm:py-12 md:py-20 w-full">
       
       {/* ── Section Header ── */}
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-12 mb-8 md:mb-12">
-        <div className="flex items-center gap-3 sm:gap-4 mb-2 sm:mb-3">
-          <span
-            className="shrink-0 text-[11px] tracking-[3px] text-[var(--ink-muted)]"
+      <div className="max-w-7xl mx-auto px-6 md:px-12 mb-4 text-center">
+        <div className="flex flex-col items-center justify-center max-w-3xl mx-auto pb-4 border-b border-[var(--line)]">
+          
+          {/* Sub-badge / Index */}
+          <div className="flex items-center justify-center gap-3 mb-3">
+            <span className="text-[12px] font-mono tracking-[3px] text-[var(--ink-muted)]">
+              04
+            </span>
+            <span className="text-[var(--ink-muted)] text-[12px]">—</span>
+            <span className="text-[11px] font-mono uppercase tracking-[3px] text-[var(--ink-muted)]">
+               Contact Me
+            </span>
+          </div>
+
+          {/* Main Title */}
+          <h2
+            className="text-[28px] sm:text-[28px] md:text-[38px] tracking-[-1.5px] leading-tight font-semibold text-[var(--ink)] mb-4"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            04
-          </span>
-          <span className="text-[11px] text-[var(--ink-muted)]">—</span>
-          <p className="text-[10px] sm:text-[11px] uppercase tracking-[3px] text-[var(--ink-muted)]">
-            Get In Touch
+            Initiate a <em className="italic font-serif font-normal text-[var(--accent)]">Conversation</em>
+          </h2>
+
+          {/* Centered Description */}
+          <p className="text-[12px] md:text-[13px] text-[var(--ink-muted)] max-w-xl leading-relaxed font-normal">
+            Available for full-stack engineering roles, technical collaborations, or consulting on custom web architecture.
           </p>
+
         </div>
-        
-        <h2
-          className="text-[28px] sm:text-[36px] md:text-[48px] tracking-[-1px] leading-tight text-[var(--ink)]"
-          style={{ fontFamily: "var(--font-display)" }}
-        >
-          Contact <span className="italic text-[var(--accent)] font-serif">Me</span>
-        </h2>
       </div>
 
       {/* ── Main Container Card ── */}

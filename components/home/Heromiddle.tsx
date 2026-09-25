@@ -42,7 +42,7 @@ export default function HeroMiddle() {
             href="#work"
             className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-[var(--ink)] text-[var(--bg)] font-mono text-[11px] tracking-[1.5px] uppercase transition-all duration-200 hover:bg-[var(--accent)] hover:text-white shadow-sm active:scale-95"
           >
-            <span>Explore Projects</span>
+            <span>Latest Works</span>
             <FaLaptopCode size={15} />
           </Link>
 

@@ -37,10 +37,10 @@ export default async function HomePage() {
       {/* Main content area — strictly isolated with md:pl-[52px] */}
       <main className="w-full min-w-0 md:pl-[52px] pb-16 md:pb-0 overflow-x-hidden flex flex-col">
         <HeroSection />
-        <DragableBox />
         <TechStack />
         <SkillsMarquee />
         <ProjectsSection projects={projects} />
+        <DragableBox />
         <AboutSection />
         <ContactSection />
         <ContactIllustration />

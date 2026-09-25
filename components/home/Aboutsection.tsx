@@ -3,29 +3,36 @@ import MernStack from "./Mernstack";
 
 export default function AboutSection() {
   return (
-    <section id="about" className="border-b border-[var(--line)]">
-      {/* Header */}
-      <div className="flex items-center gap-5 px-4 py-5 md:px-12 border-b border-[var(--line)]">
-        <span
-          className="shrink-0 text-[11px] tracking-[3px]"
-          style={{
-            color: "var(--ink-muted)",
-            fontFamily: "var(--font-display)",
-          }}
-        >
-          03
-        </span>
+    <section id="about" className="border-b mt-8 border-[var(--line)]">
+      {/* ── Section Header ── */}
+      <div className="max-w-7xl mx-auto px-6 md:px-12 mb-4 text-center">
+        <div className="flex flex-col items-center justify-center max-w-3xl mx-auto pb-4 border-b border-[var(--line)]">
+          
+          {/* Sub-badge / Index */}
+          <div className="flex items-center justify-center gap-3 mb-3">
+            <span className="text-[12px] font-mono tracking-[3px] text-[var(--ink-muted)]">
+              03
+            </span>
+            <span className="text-[var(--ink-muted)] text-[12px]">—</span>
+            <span className="text-[11px] font-mono uppercase tracking-[3px] text-[var(--ink-muted)]">
+              About Me
+            </span>
+          </div>
 
-        <span className="text-[11px] text-[var(--ink-muted)]">—</span>
+          {/* Main Title */}
+          <h2
+            className="text-[28px] sm:text-[28px] md:text-[38px] tracking-[-1.5px] leading-tight font-semibold text-[var(--ink)] mb-4"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            Engineering Background & <em className="italic font-serif font-normal text-[var(--accent)]">Philosophy</em>
+          </h2>
 
-        <h2
-          className="text-[28px] md:text-[36px] tracking-[-1px] text-[var(--ink)]"
-          style={{ fontFamily: "var(--font-display)" }}
-        >
-          About <span className="italic text-[var(--accent)]">Me</span>
-        </h2>
+          {/* Centered Description */}
+          <p className="text-[12px] md:text-[13px] text-[var(--ink-muted)] max-w-xl leading-relaxed font-normal">
+            A look into my development methodology, core philosophy, technical evolution, and stack capabilities.
+          </p>
 
-        <div className="hidden md:block flex-1 h-px ml-4 bg-[var(--line)]" />
+        </div>
       </div>
 
       {/* Content */}
@@ -41,52 +48,22 @@ export default function AboutSection() {
           >
             "I don't just write code —
             <br />
-            I craft{" "}
-            <em className="text-[var(--accent)]">experiences.</em>"
+            I build <em className="text-[var(--accent)]">resilient platforms.</em>"
           </blockquote>
 
           <p className="mb-5 max-w-[500px] font-mono text-[13px] leading-[1.9] text-[var(--ink-soft)]">
-            Passionate full stack developer from India. I love building
-            products that are fast, scalable, and solve real problems.
-            Always learning, always shipping clean code.
+            Full-stack software engineer based in India. Specializing in high-performance web applications, scalable backend architectures, and clean, maintainable codebases built to solve real-world engineering problems.
           </p>
-
-          {/* <div className="flex flex-wrap gap-5">
-            {[
-              {
-                label: "GitHub ↗",
-                href: "https://github.com/intekhabx",
-              },
-              {
-                label: "LinkedIn ↗",
-                href: "https://www.linkedin.com/in/intekhabx/",
-              },
-              {
-                label: "Twitter (X) ↗",
-                href: "https://x.com/intekhab_x",
-              },
-            ].map(({ label, href }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="border-b border-[var(--line)] pb-[2px] text-[11px] tracking-[1px] text-[var(--ink-soft)] transition-colors duration-200 hover:text-[var(--accent)]"
-              >
-                {label}
-              </a>
-            ))}
-          </div> */}
 
           {/* MERN — origin story */}
-        <div className="mt-5 border-t border-[var(--line)] pt-4">
-          <p className="mb-2 text-[10px] tracking-[3px] uppercase text-[var(--ink-muted)]">
-            Where it started
-          </p>
-          <div className="w-full flex justify-center md:block">
-            <MernStack />
+          <div className="mt-5 border-t border-[var(--line)] pt-4">
+            <p className="mb-2 text-[10px] tracking-[3px] uppercase text-[var(--ink-muted)]">
+              Core Tech Stack & Ecosystem
+            </p>
+            <div className="w-full flex justify-center md:block">
+              <MernStack />
+            </div>
           </div>
-        </div>
 
           <div className="mt-8">
             <p

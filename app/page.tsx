@@ -40,7 +40,9 @@ export default async function HomePage() {
         <TechStack />
         <SkillsMarquee />
         <ProjectsSection projects={projects} />
-        <DragableBox />
+        <div className="md:block hidden">
+          <DragableBox />
+        </div>
         <AboutSection />
         <ContactSection />
         <ContactIllustration />

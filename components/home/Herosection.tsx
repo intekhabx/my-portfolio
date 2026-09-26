@@ -5,7 +5,7 @@ export default function HeroSection() {
   return (
     <section 
       id="home" 
-      className="flex flex-col min-h-screen bg-[var(--bg)] relative overflow-hidden"
+      className="flex flex-col lg:min-h-screen bg-[var(--bg)] relative overflow-hidden"
       style={{ borderBottom: "1px solid var(--line)" }}
     >
       <HeroTopBar />

@@ -110,7 +110,7 @@ export default function ProjectCardClient({
             </div>
 
             {/* Project Title */}
-            <h3 className="text-[26px] sm:text-[28px] md:text-[30px] font-serif leading-[1.1] tracking-[-0.5px] text-[var(--ink)] mb-1 transition-colors duration-200 group-hover:text-[var(--accent)]">
+            <h3 className="text-[20px] sm:text-[26px] md:text-[30px] font-serif leading-[1.1] tracking-[-0.5px] text-[var(--ink)] mb-1 transition-colors duration-200 group-hover:text-[var(--accent)]">
               {project.name}
             </h3>
 

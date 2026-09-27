@@ -18,7 +18,7 @@ export const revalidate = 60;
 async function getProjects() {
   try {
     await dbConnection();
-    const projects = await projectModel.find({}).sort({ createdAt: -1 }).lean();
+    const projects = await projectModel.find({isVisible: true}).sort({ createdAt: -1 }).lean();
     return JSON.parse(JSON.stringify(projects));
   } catch (err) {
     console.error("Failed to fetch projects:", err);
@@ -40,7 +40,9 @@ export default async function HomePage() {
         <TechStack />
         <SkillsMarquee />
         <ProjectsSection projects={projects} />
-        <DragableBox />
+        <div className="md:block hidden">
+          <DragableBox />
+        </div>
         <AboutSection />
         <ContactSection />
         <ContactIllustration />

@@ -4,11 +4,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   return (
     <div
       className="flex min-h-screen"
-      style={{ background: "#0a0a0a", fontFamily: "var(--font-body)" }}
+      style={{ background: "var(--bg)", fontFamily: "var(--font-body)" }}
     >
       <DashboardSidebar />
 
-      <main className="flex-1 overflow-y-auto pt-[52px] md:pt-0" style={{ background: "#0a0a0a" }}>
+      <main className="flex-1 overflow-y-auto pt-[52px] md:pt-0" style={{ background: "var(--bg)" }}>
         {children}
       </main>
     </div>

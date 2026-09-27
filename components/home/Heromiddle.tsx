@@ -10,11 +10,11 @@ export default function HeroMiddle() {
   return (
     <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-12 pt-32 pb-20 flex flex-col items-center">
       
-      {/* ── TOP: MINTLIFY-INSPIRED HERO HEADER ── */}
+      {/* ── TOP: HERO HEADER ── */}
       <div className="w-full flex flex-col items-center text-center space-y-6 max-w-3xl mb-16">
         
         {/* Release / Status Tag Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[var(--line)] bg-[var(--ink)]/[0.03] text-[12px] font-mono text-[var(--ink-soft)]">
+        <div className="inline-flex items-center gap-2 px-2 md:pr-4 py-1.5 rounded-full border border-[var(--line)] bg-[var(--ink)]/[0.03] text-[10px] md:text-[12px] font-mono text-[var(--ink-soft)]">
           <span className="px-2 py-0.5 rounded-full bg-[var(--accent)]/10 text-[var(--accent)] font-semibold text-[10px]">
             v2.0
           </span>

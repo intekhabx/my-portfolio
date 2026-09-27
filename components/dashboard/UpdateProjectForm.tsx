@@ -1,11 +1,13 @@
 "use client";
 
 import axios from "axios";
-import { useState } from "react";
+import { useState, ChangeEvent } from "react";
 import { useForm } from "react-hook-form";
-import { FaXmark } from "react-icons/fa6";
+import { FaXmark, FaImage, FaTrash } from "react-icons/fa6";
 import { projectSchemaDto, ProjectSchemaType } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { MdOutlineEditNote } from "react-icons/md";
+import Image from "next/image";
 
 interface Props {
   setShowUpdateProjectPage: React.Dispatch<React.SetStateAction<boolean>>;
@@ -16,6 +18,7 @@ interface Props {
     techStack: string;
     githubLink?: string;
     liveLink?: string;
+    imageUrl?: string; // Old project image URL
   };
 }
 
@@ -50,20 +53,12 @@ const fields = [
   },
 ];
 
-const inputStyle: React.CSSProperties = {
-  width: "100%",
-  background: "transparent",
-  border: "none",
-  borderBottom: "1px solid rgba(255,255,255,0.1)",
-  padding: "10px 0",
-  fontSize: "13px",
-  color: "#f0e8d8",
-  fontFamily: "var(--font-body)",
-  outline: "none",
-};
-
 const UpdateProjectForm = ({ setShowUpdateProjectPage, oldProjectData }: Props) => {
   const [loading, setLoading] = useState(false);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(
+    oldProjectData?.imageUrl || null
+  );
 
   const {
     register,
@@ -72,108 +67,210 @@ const UpdateProjectForm = ({ setShowUpdateProjectPage, oldProjectData }: Props) 
     formState: { errors },
   } = useForm<ProjectSchemaType>({
     defaultValues: {
-      name:        oldProjectData?.name,
+      name: oldProjectData?.name,
       description: oldProjectData?.description,
-      techStack:   oldProjectData?.techStack,
-      githubLink:  oldProjectData?.githubLink,
-      liveLink:    oldProjectData?.liveLink,
+      techStack: oldProjectData?.techStack,
+      githubLink: oldProjectData?.githubLink,
+      liveLink: oldProjectData?.liveLink,
     },
     resolver: zodResolver(projectSchemaDto),
   });
 
+  // Image handle & preview logic
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setImageFile(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setImageFile(null);
+    setImagePreview(null);
+  };
+
   const onSubmit = async (data: ProjectSchemaType) => {
     try {
       setLoading(true);
-      const parsedData = await projectSchemaDto.parseAsync(data);
-      const payload = {
-        ...parsedData,
-        techStack: parsedData.techStack
-          .split(",")
-          .map((tech) => tech.trim())
-          .filter(Boolean),
-      };
-      await axios.patch(`/api/project/${oldProjectData.id}`, payload);
+
+      const formData = new FormData();
+      formData.append("name", data.name);
+      if (data.description) formData.append("description", data.description);
+      formData.append("techStack", data.techStack);
+      if (data.githubLink) formData.append("githubLink", data.githubLink);
+      if (data.liveLink) formData.append("liveLink", data.liveLink);
+
+      // Agar new image select hui hai toh FormData mein append karein
+      if (imageFile) {
+        formData.append("file", imageFile);
+      } else if (imagePreview) {
+        // Agar new image nahi select hui par purani hai
+        formData.append("imageUrl", imagePreview);
+      }
+
+      await axios.put(`/api/project/${oldProjectData.id}`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
       reset();
-      alert("Project Updated Successfully");
-    } catch (error) {
-      console.error(error);
+      setShowUpdateProjectPage(false);
+    } 
+    catch (error) {
+      console.error("Update error:", error);
       alert("Failed to update project");
-    } finally {
+    } 
+    finally {
       setLoading(false);
     }
   };
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center px-4"
-      style={{ background: "rgba(0,0,0,0.7)", backdropFilter: "blur(4px)" }}
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-sm transition-opacity"
+      onClick={() => setShowUpdateProjectPage(false)}
     >
       <div
-        className="w-full max-w-xl relative"
+        className="w-full max-w-xl rounded-xl border shadow-2xl overflow-hidden flex flex-col max-h-[90vh] transition-all duration-300 font-[var(--font-body)]"
         style={{
-          background: "#111111",
-          border: "1px solid rgba(255,255,255,0.08)",
+          backgroundColor: "var(--bg-soft)",
+          borderColor: "var(--line)",
+          color: "var(--ink)",
         }}
+        onClick={(e) => e.stopPropagation()}
       >
-        {/* ── Header ── */}
+        {/* Header */}
         <div
-          className="flex items-center justify-between px-8 py-5"
-          style={{ borderBottom: "1px solid rgba(255,255,255,0.07)" }}
+          className="flex items-center justify-between px-6 py-5 border-b shrink-0"
+          style={{
+            backgroundColor: "var(--bg)",
+            borderColor: "var(--line)",
+          }}
         >
-          <div>
-            <p
-              className="text-[9px] tracking-[3px] uppercase mb-1"
-              style={{ color: "rgba(255,255,255,0.25)" }}
+          <div className="flex items-center gap-3">
+            <div
+              className="p-2 rounded-lg border"
+              style={{
+                backgroundColor: "var(--bg-soft)",
+                borderColor: "var(--line)",
+                color: "var(--accent)",
+              }}
             >
-              Admin · Projects
-            </p>
-            <h2
-              className="text-[22px] tracking-[-0.5px]"
-              style={{ fontFamily: "var(--font-serif)", color: "#f0e8d8" }}
-            >
-              Edit{" "}
-              <em className="italic" style={{ color: "#c8430a" }}>
-                Project.
-              </em>
-            </h2>
+              <MdOutlineEditNote size={20} />
+            </div>
+            <div>
+              <p
+                className="text-[10px] font-mono tracking-[2px] uppercase"
+                style={{ color: "var(--ink-muted)" }}
+              >
+                Admin · Projects
+              </p>
+              <h2
+                className="text-lg font-semibold tracking-tight"
+                style={{
+                  fontFamily: "var(--font-display)",
+                  color: "var(--ink)",
+                }}
+              >
+                Edit Project<span style={{ color: "var(--accent)" }}>.</span>
+              </h2>
+            </div>
           </div>
 
-          {/* Close button */}
           <button
+            type="button"
             onClick={() => setShowUpdateProjectPage(false)}
-            className="flex items-center justify-center w-8 h-8 transition-colors duration-150"
+            className="hover:bg-[var(--accent)]/5 p-2 rounded-lg border transition-colors hover:opacity-80 cursor-pointer"
             style={{
-              border: "1px solid rgba(255,255,255,0.1)",
-              color: "rgba(255,255,255,0.3)",
-              background: "transparent",
-              cursor: "pointer",
+              borderColor: "var(--line)",
+              color: "var(--ink-soft)",
             }}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLElement).style.background = "#c8430a";
-              (e.currentTarget as HTMLElement).style.color = "#fff";
-              (e.currentTarget as HTMLElement).style.borderColor = "#c8430a";
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLElement).style.background = "transparent";
-              (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.3)";
-              (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.1)";
-            }}
+            title="Close Modal"
           >
-            <FaXmark size={12} />
+            <FaXmark size={14} />
           </button>
         </div>
 
-        {/* ── Form ── */}
+        {/* Form Content */}
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="px-8 py-6 flex flex-col gap-5"
+          className="p-6 overflow-y-auto space-y-5 flex-1"
         >
-          {/* Single line fields */}
-          {fields.map(({ name, label, type, placeholder, hint }) => (
-            <div key={name}>
+          {/* Image Upload & Preview Section */}
+          <div className="space-y-1.5">
+            <label
+              className="block text-[10px] font-mono tracking-[1.5px] uppercase font-semibold"
+              style={{ color: "var(--ink-soft)" }}
+            >
+              Project Cover Image
+            </label>
+
+            {imagePreview ? (
+              <div
+                className="relative w-full h-44 rounded-lg overflow-hidden border group"
+                style={{ borderColor: "var(--line)" }}
+              >
+                <Image
+                  src={imagePreview}
+                  alt="Project Preview"
+                  fill
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+                <button
+                  type="button"
+                  onClick={handleRemoveImage}
+                  className="absolute top-2 right-2 p-2 rounded-md bg-black/70 text-red-400 hover:bg-black/90 transition-colors"
+                  title="Remove Image"
+                >
+                  <FaTrash size={12} />
+                </button>
+              </div>
+            ) : (
               <label
-                className="block text-[9px] tracking-[2px] uppercase mb-2"
-                style={{ color: "rgba(255,255,255,0.3)" }}
+                className="flex flex-col items-center justify-center w-full h-36 rounded-lg border-2 border-dashed cursor-pointer transition-colors"
+                style={{
+                  backgroundColor: "var(--bg)",
+                  borderColor: "var(--line)",
+                }}
+              >
+                <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                  <FaImage
+                    className="mb-2 text-2xl"
+                    style={{ color: "var(--ink-muted)" }}
+                  />
+                  <p
+                    className="text-xs font-mono"
+                    style={{ color: "var(--ink-soft)" }}
+                  >
+                    Click to upload new image
+                  </p>
+                  <p
+                    className="text-[10px] font-mono mt-1"
+                    style={{ color: "var(--ink-muted)" }}
+                  >
+                    PNG, JPG, WEBP (MAX. 5MB)
+                  </p>
+                </div>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  className="hidden"
+                />
+              </label>
+            )}
+          </div>
+
+          {/* Dynamic Fields */}
+          {fields.map(({ name, label, type, placeholder, hint }) => (
+            <div key={name} className="space-y-1.5">
+              <label
+                className="block text-[10px] font-mono tracking-[1.5px] uppercase font-semibold"
+                style={{ color: "var(--ink-soft)" }}
               >
                 {label}
               </label>
@@ -181,38 +278,37 @@ const UpdateProjectForm = ({ setShowUpdateProjectPage, oldProjectData }: Props) 
                 type={type}
                 placeholder={placeholder}
                 {...register(name)}
-                style={inputStyle}
-                onFocus={(e) =>
-                  ((e.currentTarget as HTMLElement).style.borderColor =
-                    "rgba(200,67,10,0.6)")
-                }
-                onBlur={(e) =>
-                  ((e.currentTarget as HTMLElement).style.borderColor =
-                    "rgba(255,255,255,0.1)")
-                }
-                className="placeholder:opacity-20"
+                className="w-full px-3.5 py-2.5 text-xs rounded-lg border outline-none transition-all duration-200 focus:ring-1"
+                style={{
+                  backgroundColor: "var(--bg)",
+                  borderColor: "var(--line)",
+                  color: "var(--ink)",
+                }}
               />
               {hint && (
                 <p
-                  className="text-[10px] tracking-[0.5px] mt-1.5"
-                  style={{ color: "rgba(255,255,255,0.2)" }}
+                  className="text-[10px] font-mono"
+                  style={{ color: "var(--ink-muted)" }}
                 >
                   {hint}
                 </p>
               )}
               {errors[name] && (
-                <p className="text-[11px] mt-1.5" style={{ color: "#c8430a" }}>
+                <p
+                  className="text-[11px] font-mono mt-1"
+                  style={{ color: "var(--accent)" }}
+                >
                   {errors[name]?.message}
                 </p>
               )}
             </div>
           ))}
 
-          {/* Description — textarea */}
-          <div>
+          {/* Description Textarea */}
+          <div className="space-y-1.5">
             <label
-              className="block text-[9px] tracking-[2px] uppercase mb-2"
-              style={{ color: "rgba(255,255,255,0.3)" }}
+              className="block text-[10px] font-mono tracking-[1.5px] uppercase font-semibold"
+              style={{ color: "var(--ink-soft)" }}
             >
               Description
             </label>
@@ -220,46 +316,47 @@ const UpdateProjectForm = ({ setShowUpdateProjectPage, oldProjectData }: Props) 
               rows={4}
               placeholder="Describe your project..."
               {...register("description")}
-              style={{ ...inputStyle, resize: "none" }}
-              onFocus={(e) =>
-                ((e.currentTarget as HTMLElement).style.borderColor =
-                  "rgba(200,67,10,0.6)")
-              }
-              onBlur={(e) =>
-                ((e.currentTarget as HTMLElement).style.borderColor =
-                  "rgba(255,255,255,0.1)")
-              }
-              className="placeholder:opacity-20"
+              className="w-full px-3.5 py-2.5 text-xs rounded-lg border outline-none transition-all duration-200 focus:ring-1 resize-none"
+              style={{
+                backgroundColor: "var(--bg)",
+                borderColor: "var(--line)",
+                color: "var(--ink)",
+              }}
             />
             {errors.description && (
-              <p className="text-[11px] mt-1.5" style={{ color: "#c8430a" }}>
+              <p
+                className="text-[11px] font-mono mt-1"
+                style={{ color: "var(--accent)" }}
+              >
                 {errors.description.message}
               </p>
             )}
           </div>
 
-          {/* Submit */}
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full text-[11px] tracking-[2px] uppercase py-3.5 transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed mt-1"
-            style={{
-              background: "#c8430a",
-              color: "#fff",
-              border: "none",
-              cursor: loading ? "not-allowed" : "pointer",
-              fontFamily: "var(--font-body)",
-            }}
-            onMouseEnter={(e) => {
-              if (!loading)
-                (e.currentTarget as HTMLElement).style.background = "#a83508";
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLElement).style.background = "#c8430a";
-            }}
+          {/* Actions */}
+          <div
+            className="pt-4 flex items-center justify-end gap-3 border-t shrink-0"
+            style={{ borderColor: "var(--line)" }}
           >
-            {loading ? "Updating..." : "Update Project →"}
-          </button>
+            <button
+              type="button"
+              onClick={() => setShowUpdateProjectPage(false)}
+              className="bg-[var(--bg)] hover:bg-[var(--accent)]/5 px-4 py-2.5 text-xs tracking-wider rounded-lg border transition-all cursor-pointer"
+              style={{
+                borderColor: "var(--line)",
+                color: "var(--ink-soft)",
+              }}
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={loading}
+              className="px-5 py-2.5 text-xs bg-[var(--accent)]/90 hover:bg-[var(--accent)] tracking-wider rounded-lg text-white transition-all disabled:opacity-50 cursor-pointer"
+            >
+              {loading ? "Updating..." : "Update Project →"}
+            </button>
+          </div>
         </form>
       </div>
     </div>

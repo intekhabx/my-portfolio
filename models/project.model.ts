@@ -3,14 +3,16 @@ import { Document } from "mongoose";
 
 
 export interface IProject extends Document {
-  _id: mongoose.Types.ObjectId
+  _id: mongoose.Types.ObjectId,
   name: string,
   description: string,
   techStack: string[],
   liveLink?: string,
-  githubLink?: string
-  updatedAt?: Date
-  createdAt?: Date
+  githubLink?: string,
+  image?: string,
+  isVisible: boolean,
+  updatedAt?: Date,
+  createdAt?: Date,
 }
 
 
@@ -32,6 +34,13 @@ const projectSchema = new mongoose.Schema<IProject>({
   },
   githubLink: {
     type: String
+  },
+  image: {
+    type: String,
+  },
+  isVisible: {
+    type: Boolean,
+    default: true
   }
 }, {timestamps: true})
 

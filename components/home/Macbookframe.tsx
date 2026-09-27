@@ -26,7 +26,7 @@ export default function MacbookFrame({ src, alt }: MacbookFrameProps) {
             <img
               src={src}
               alt={alt}
-              className="w-full h-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-105"
+              className="w-full h-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-102"
             />
           ) : (
             <div className="w-full h-full flex flex-col items-center justify-center p-4 bg-gradient-to-br from-neutral-900 via-black to-neutral-900 text-center">

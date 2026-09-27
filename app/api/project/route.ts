@@ -1,4 +1,5 @@
 import dbConnection from "@/lib/db";
+import { imagekit } from "@/lib/imagekit";
 import { projectModel } from "@/models/project.model";
 import { isLoggedIn } from "@/utils/auth.utils";
 import { NextRequest, NextResponse } from "next/server";
@@ -42,17 +43,41 @@ export async function POST(req: NextRequest){
       }, { status: 401 });
     }
 
-    //extract the payload form request
-    const {name, description, techStack, liveLink, githubLink} = await req.json();
+    const formData = await req.formData();
+    // console.log(formData);
+
+    const file = formData.get("file") as File;
+    const techStack = formData.get("techStack") as string; //we can extract one by one like this
+    const {name, description, liveLink, githubLink} = Object.fromEntries(formData);
+
+
+    let url;
+    if(file){
+      //1. File ko Buffer mein convert
+      const arrayBuffer = await file.arrayBuffer();
+      const buffer = Buffer.from(arrayBuffer);
+  
+      // 2. ImageKit par upload
+      const uploadRes = await imagekit.upload({
+        file: buffer,
+        fileName: `${Date.now()}_${file.name}`,
+        folder: "/projects",
+      });
+
+      url = uploadRes.url;
+    }
+
 
     await dbConnection();
 
+    const techStackArray = techStack.split(",").map((tech) => tech.trim());
     await projectModel.create({
       name,
       description,
-      techStack,
       liveLink,
-      githubLink
+      githubLink,
+      techStack: techStackArray,
+      image: url,
     })
 
     return NextResponse.json({

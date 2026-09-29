@@ -6,6 +6,8 @@ import {
   FiCpu, FiLayers, FiMessageSquare, FiRefreshCw,
   FiUser, FiZap,
 } from "react-icons/fi";
+import MarkdownMessage from "./MarkdownMessage";
+
 
 /* ─── Theme tokens (matches portfolio blue accent) ───── */
 const ACCENT     = "#1d9bf0";
@@ -23,7 +25,7 @@ const BORDER     = "rgba(255,255,255,0.07)";
 
 interface Message {
   id: string;
-  sender: "user" | "bot";
+  sender: "user" | "agent";
   text: string;
   timestamp: string;
 }
@@ -34,16 +36,6 @@ const QUICK_PROMPTS = [
   { label: "Availability", icon: <FiBriefcase />, query: "Are you available for work?"   },
 ];
 
-function getReply(q: string): string {
-  const ql = q.toLowerCase();
-  if (ql.includes("stack") || ql.includes("tech") || ql.includes("use"))
-    return "Intekhab works with Next.js, React, TypeScript, Node.js, Express, MongoDB, Redis and AI integrations — focused on building scalable full-stack systems.";
-  if (ql.includes("project") || ql.includes("work") || ql.includes("show"))
-    return "Featured projects include PulseHub (real-time voting) and I-Try (AI assistant). Explore more in the Selected Work section.";
-  if (ql.includes("hire") || ql.includes("available") || ql.includes("freelance"))
-    return "Intekhab is open to freelance contracts and full-time roles focused on Full Stack and AI engineering.";
-  return "I can help you explore Intekhab's experience, skills, projects and availability. Try a quick prompt below!";
-}
 
 export default function ChatAgent() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -72,21 +64,69 @@ export default function ChatAgent() {
     return () => window.removeEventListener("keydown", h);
   }, []);
 
-  const send = (text?: string) => {
-    const q = (text ?? input).trim();
-    if (!q || loading) return;
+
+  // function that give time
+  const getTime = () => {
     const time = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-    setMessages(p => [...p, { id: Date.now().toString(), sender: "user", text: q, timestamp: time }]);
+    return time;
+  }
+
+
+  const send = async (text?: string) => {
+    // step:1 - trim the input or text
+    const query = (text ?? input).trim();
+    if (!query || loading) return;
+    
+    // step:2 - add the user input message in the chat
+    const time = getTime();
+    setMessages(prev => [...prev, { id: Date.now().toString(), sender: "user", text: query, timestamp: time }]);
+
+    // step:3 - reset the loading in input state
     setInput("");
     setLoading(true);
-    setTimeout(() => {
-      setMessages(p => [...p, {
-        id: (Date.now()+1).toString(), sender: "bot",
-        text: getReply(q),
-        timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-      }]);
-      setLoading(false);
-    }, 700);
+
+    try {
+      // step:4 - send request with input prompt to backend api
+      const res = await fetch("/api/agent/chat", {
+        method: "POST",
+        body: JSON.stringify({ prompt: query }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      // reader that reads the chunk
+      const reader = res.body?.getReader();
+      const decoder = new TextDecoder();
+
+      let fullResponse = "";
+
+      const msgId = Date.now().toString();
+      setMessages((prev) => [...prev, {id: msgId, text: fullResponse, sender: "agent", timestamp: getTime()}]);
+
+      while (true) {
+        // extracting eack chunk data
+        const { value, done } = await reader!.read();
+
+        if (done) break;
+
+        const text = decoder.decode(value);
+
+        fullResponse += text;
+
+        setMessages((prev) => prev.map((msg) => msg.id === msgId ? {...msg, text: fullResponse} : msg));
+      }
+      // const res = await axios.post("/api/agent/chat", {prompt: query});
+      // console.log(res.data);
+    } 
+    catch (error: any) {
+      console.log(error);
+      const time = getTime();
+      setMessages((prev) => [...prev, {id: Date.now().toString(), sender: "agent", text: "Your Query is Failed", timestamp: time}])
+    }
+    finally{
+      setLoading(false); 
+    }
   };
 
   const reset = () => { setMessages([]); setInput(""); setLoading(false); };
@@ -183,7 +223,7 @@ export default function ChatAgent() {
                 key={msg.id}
                 className={`flex gap-2.5 ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
               >
-                {msg.sender === "bot" && (
+                {msg.sender === "agent" && (
                   <div className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 mt-1"
                     style={{ background: ACCENT_DIM, border: `1px solid ${ACCENT_MED}` }}>
                     <FiCpu className="w-3.5 h-3.5" style={{ color: ACCENT }} />
@@ -209,7 +249,8 @@ export default function ChatAgent() {
                       color: msg.sender === "user" ? "#fff" : "rgba(255,255,255,0.78)",
                     }}
                   >
-                    {msg.text}
+                    {/* format the message and show to user */}
+                    <MarkdownMessage content={msg.text} />
                   </div>
                 </div>
 

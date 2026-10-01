@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import getResponseOfLLM from "../agent";
+import redis from "@/lib/redis";
+import { cookies } from "next/headers";
 
 
 
@@ -103,11 +105,21 @@ export async function POST(req: NextRequest) {
       },{status: 400});
     }
 
-    // step:2 - Get LLM stream response
-    const response = await getResponseOfLLM(prompt);
+    // step:2 - extract the visitor(user) sessionId that we add in the cookie
+    const cookieStore = await cookies();
+    const sessionId = cookieStore.get("sessionId");
+    if(!sessionId){
+      return NextResponse.json({
+        error: "sessionId is required",
+      },{status: 400});
+    }
+
+    // step:3 - Get LLM stream response
+    const response = await getResponseOfLLM(prompt, sessionId.value);
 
     // 3. Create a stream for the frontend
     const encoder = new TextEncoder();
+    let message = "";
 
     const stream = new ReadableStream({
       async start(controller) {
@@ -115,13 +127,17 @@ export async function POST(req: NextRequest) {
         for await (const chunk of response) {
           const content = chunk.choices[0]?.delta?.content;
           // console.log(content);
-
+          
           if (!content) continue;
+          message += content;
 
           controller.enqueue(
             encoder.encode(content)
           );
         }
+
+        // add the LLM response msge in the redis
+        await redis.rpush(`active-chat:${sessionId.value}`, JSON.stringify({role: "assistant", content: message}));
 
         controller.close();
       },
@@ -143,5 +159,35 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       error: "Something went wrong while generating response",
     },{status: 500});
+  }
+}
+
+
+
+// function that resets the chat history
+export async function PATCH(){
+  try {
+    // step:1 - extract the user sessionid that we insert in the cookie
+    const cookieStore = await cookies();
+    const sessionId = cookieStore.get("sessionId");
+    if(!sessionId){
+      return NextResponse.json({
+        error: "sessionId is required to reset the chat"
+      }, {status: 400});
+    }
+
+    // step:2 - rename the active-chat:${sessionId} key into another key
+    await redis.rename(`active-chat:${sessionId.value}`, `reset-chat:${sessionId.value}:${Date.now()}`);
+
+    // step:3 - send the response to the frontend
+    return NextResponse.json({
+      message: "chat reset successfully",
+    }, {status: 200});
+  } 
+  catch (error) {
+    console.log(error);
+    return NextResponse.json({
+      error: "somthing went wrong while resetting chat"
+    }, {status: 500});
   }
 }

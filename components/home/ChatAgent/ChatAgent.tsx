@@ -7,6 +7,7 @@ import {
   FiUser, FiZap,
 } from "react-icons/fi";
 import MarkdownMessage from "./MarkdownMessage";
+import axios from "axios";
 
 
 /* ─── Theme tokens (matches portfolio blue accent) ───── */
@@ -45,6 +46,23 @@ export default function ChatAgent() {
   const scrollAreaRef           = useRef<HTMLDivElement>(null);
   const inputRef                = useRef<HTMLInputElement>(null);
   const isEmpty                 = messages.length === 0;
+
+
+  // whenever a visitor comes give them a seesionId
+  useEffect(() => {
+    async function getSessionId(){
+      try {
+        await axios.get("http://localhost:3000/api/agent/session");
+        console.log("sessionId has been attached");
+      } 
+      catch (error) {
+        console.log(error);
+      }
+    }
+
+    getSessionId();
+  }, []);
+
 
   /* scroll only the chat container — never the page */
   useEffect(() => {
@@ -103,6 +121,7 @@ export default function ChatAgent() {
 
       const msgId = Date.now().toString();
       setMessages((prev) => [...prev, {id: msgId, text: fullResponse, sender: "agent", timestamp: getTime()}]);
+      setLoading(false);
 
       while (true) {
         // extracting eack chunk data
@@ -129,7 +148,17 @@ export default function ChatAgent() {
     }
   };
 
-  const reset = () => { setMessages([]); setInput(""); setLoading(false); };
+
+  // reset the chat***
+  const reset = async () => {
+    setMessages([]); setInput(""); setLoading(false); 
+    try {
+      await axios.patch("/api/agent/chat");
+    } 
+    catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div

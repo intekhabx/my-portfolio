@@ -114,36 +114,31 @@ export async function POST(req: NextRequest) {
       },{status: 400});
     }
 
-    // step:3 - Get LLM stream response
-    const response = await getResponseOfLLM(prompt, sessionId.value);
+    // step:3 - LLM generator ko call karo. // Ye generator handle karega: LLM → tool → LLM → final response.
+    const response = getResponseOfLLM(prompt, sessionId.value);
 
-    // 3. Create a stream for the frontend
+    // step:4 - Encoder create karo. Isse JavaScript string ko Uint8Array mein convert karke stream mein bhejega.
     const encoder = new TextEncoder();
-    let message = "";
 
+    // step:5 - frontend ke liye ReadableStream create karo.
     const stream = new ReadableStream({
       async start(controller) {
         // loop the response and take chunks
-        for await (const chunk of response) {
-          const content = chunk.choices[0]?.delta?.content;
-          // console.log(content);
-          
-          if (!content) continue;
-          message += content;
-
-          controller.enqueue(
-            encoder.encode(content)
-          );
+        for await (const event of response) {
+          // if Ai response agar normal text hai
+          if(event.type === "text"){
+            // immediately frontend ko stream kro
+            controller.enqueue(
+              encoder.encode(event.content)
+            );
+          }
         }
-
-        // add the LLM response msge in the redis
-        await redis.rpush(`active-chat:${sessionId.value}`, JSON.stringify({role: "assistant", content: message}));
 
         controller.close();
       },
     });
 
-    // 4. Return stream response
+    // step:6 - Return stream response
     return new Response(stream, {
       status: 200,
       headers: {

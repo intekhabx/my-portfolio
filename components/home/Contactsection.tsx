@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { submitContactMessage } from "@/lib/actions";
 import { FiCopy, FiMail, FiCheck, FiArrowUpRight, FiClock, FiFolder, FiCheckCircle, FiAlertCircle, FiSend, FiMessageSquare } from "react-icons/fi";
+import SectionHeader from "./Sectionheader";
 
 export default function ContactSection() {
   const EMAIL_ADDRESS = "intekhab118211989@gmail.com";
@@ -49,35 +50,7 @@ export default function ContactSection() {
     <section id="contact" className="border-t border-[var(--line)] py-8 sm:py-12 md:py-20 w-full">
       
       {/* ── Section Header ── */}
-      <div className="max-w-7xl mx-auto px-6 md:px-12 mb-4 text-center">
-        <div className="flex flex-col items-center justify-center max-w-3xl mx-auto pb-4 border-b border-[var(--line)]">
-          
-          {/* Sub-badge / Index */}
-          <div className="flex items-center justify-center gap-3 mb-3">
-            <span className="text-[12px] font-mono tracking-[3px] text-[var(--ink-muted)]">
-              04
-            </span>
-            <span className="text-[var(--ink-muted)] text-[12px]">—</span>
-            <span className="text-[11px] font-mono uppercase tracking-[3px] text-[var(--ink-muted)]">
-               Contact Me
-            </span>
-          </div>
-
-          {/* Main Title */}
-          <h2
-            className="text-[28px] sm:text-[28px] md:text-[38px] tracking-[-1.5px] leading-tight font-semibold text-[var(--ink)] mb-4"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            Initiate a <em className="italic font-serif font-normal text-[var(--accent)]">Conversation</em>
-          </h2>
-
-          {/* Centered Description */}
-          <p className="text-[12px] md:text-[13px] text-[var(--ink-muted)] max-w-xl leading-relaxed font-normal">
-            Available for full-stack engineering roles, technical collaborations, or consulting on custom web architecture.
-          </p>
-
-        </div>
-      </div>
+      <SectionHeader slNo="05" slText="Contact Me" leftMainTitle="Initiate a" rightMainTitle="Conversation" desc="Available for full-stack engineering roles, technical collaborations, or consulting on custom web architecture." />
 
       {/* ── Main Container Card ── */}
       <div className="w-full max-w-7xl mx-auto px-3 sm:px-6 md:px-12">

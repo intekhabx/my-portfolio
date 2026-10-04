@@ -32,22 +32,28 @@ export default function HeroTopBar() {
         {/* Center Nav Links (Pinterest-inspired floating pill style) */}
         <div className="hidden md:flex items-center gap-1 bg-[var(--ink)]/[0.03] p-1 rounded-full border border-[var(--line)]">
           <Link
-            href="#work"
+            href="#stack"
             className="px-4 py-1.5 rounded-full text-[12px] font-medium text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--bg)] transition-all duration-200"
           >
-            Projects
+            Tech Stack
           </Link>
           <Link
-            href="#about"
+            href="#how-i-work"
             className="px-4 py-1.5 rounded-full text-[12px] font-medium text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--bg)] transition-all duration-200"
           >
-            About
+            How I Work
           </Link>
           <Link
             href="#agent"
             className="px-4 py-1.5 rounded-full text-[12px] font-medium text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--bg)] transition-all duration-200"
           >
             AI Agent
+          </Link>
+          <Link
+            href="#github"
+            className="px-4 py-1.5 rounded-full text-[12px] font-medium text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--bg)] transition-all duration-200"
+          >
+            Github Stats
           </Link>
         </div>
 
@@ -62,15 +68,9 @@ export default function HeroTopBar() {
 
           <Link
             href="#contact"
-            className="text-[10px] md:text-[11px] font-mono tracking-[1px] uppercase px-4 py-2 rounded-full bg-[var(--ink)] text-[var(--bg)] transition-all duration-200 hover:bg-[var(--accent)] hover:text-white active:scale-95 shadow-sm"
+            className="text-[10px] md:text-[11px] font-mono uppercase px-4 py-2 rounded-full bg-[var(--ink)] text-[var(--bg)] transition-all duration-200 hover:bg-[var(--accent)] hover:text-white active:scale-95 shadow-sm"
           >
             Hire Me
-          </Link>
-
-          <Link
-            href="/admin/dashboard"
-            className="hover:text-[var(--accent)]">
-              <PiArrowBendDoubleUpRightBold  />
           </Link>
         </div>
       </nav>

@@ -60,7 +60,7 @@ export default function Sidebar() {
           <span
             className="rotate-180 [writing-mode:vertical-rl] text-[10px] font-mono tracking-[4px] font-bold text-slate-200 opacity-90 select-none"
           >
-            INTEKHABx<span className="text-[var(--accent)]">.DEV</span>
+            INTEKHAB
           </span>
         </div>
 

@@ -52,7 +52,7 @@ export default function ProjectCardClient({
           onClick={handleCardClick}
           className={`lg:col-span-6 w-full ${
             isEven ? "lg:order-1" : "lg:order-2"
-          } cursor-pointer`}
+          } cursor-pointer hover:scale-110 duration-300`}
         >
           <div className="bg-[var(--bg)] lg:p-2 rounded-xl">
             <MacbookFrame src={project.image} alt={project.name} />

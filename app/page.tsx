@@ -12,6 +12,8 @@ import SocialBanner from "@/components/home/Socialbanner";
 import ContactIllustration from "@/components/home/Contactillustration";
 import SkillsMarquee from "@/components/home/Skillsmarquee";
 import DragableBox from "@/components/home/Dragbox";
+import MyWorkApproach from "@/components/home/Myworkapproach"
+import GithubSection from "@/components/home/Githubsection";
 
 export const revalidate = 60;
 
@@ -40,13 +42,15 @@ export default async function HomePage() {
         <TechStack />
         <SkillsMarquee />
         <ProjectsSection projects={projects} />
+        <MyWorkApproach />
         <div className="md:block hidden">
           <DragableBox />
         </div>
         <AboutSection />
+        <GithubSection />
         <ContactSection />
         <ContactIllustration />
-        <SocialBanner />
+        {/* <SocialBanner /> */}
         <Footer />
       </main>
     </div>

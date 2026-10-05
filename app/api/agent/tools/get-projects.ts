@@ -8,7 +8,8 @@ export async function getProjects(){
     techStack: 1,
     liveLink: 1,
     githubLink: 1,
-  });
+  })
+  .sort({isVisible: -1, createdAt: -1}); //latest project which has isVisible: true
   // return only these 5 data of every project
   // _id, createdAt, updatedAt, etc shouldn't send to the LLM
 }

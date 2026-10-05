@@ -3,10 +3,11 @@ import redis from "@/lib/redis";
 import { getProjectsTool } from "./tools/get-projects";
 import { getProjectDetailsTool } from "./tools/get-project-details";
 import { toolHandlers } from "./tools";
+import { systemPrompt } from "./utils/system-prompt";
 
 
 
-const getMessageHistory = async (userSessionId: string) => {
+export const getMessageHistory = async (userSessionId: string) => {
   // ["{role: 'user', content: 'tell me your project'}", "{role: 'assistant', content: 'pulsehub'}", ....]
   const chatHistoryArray = await redis.lrange(`active-chat:${userSessionId}`, 0, -1);
   return chatHistoryArray.map((msgObj)=> JSON.parse(msgObj));
@@ -33,7 +34,7 @@ export default async function* getResponseOfLLM(userPrompt: string, userSessionI
   const messages: any[] = [
     {
       role: "system",
-      content: "you are a helpful assistant that respond user in calm and nicely and you can also use tools that are given to you and always remember you can answere general quesiton also you don't have any restiction"
+      content: systemPrompt,
     },
     // previous history chat message
     ...history,
@@ -111,7 +112,7 @@ export default async function* getResponseOfLLM(userPrompt: string, userSessionI
 
     // STEP 15: Agar tool call nahi hai, iska matlab final response complete ho gaya.
     if (calls.length === 0) {
-      // final without any tool_call response redis me save kro context ke liye
+      // final response redis me save kro context ke liye
       await redis.rpush(key, JSON.stringify({ role: "assistant", content: message }));
       return;
     }

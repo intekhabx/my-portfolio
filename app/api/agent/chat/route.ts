@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import getResponseOfLLM from "../agent";
 import redis from "@/lib/redis";
 import { cookies } from "next/headers";
+import inputGuardrails from "../guardrails/input-guard";
 
 
 
@@ -114,13 +115,21 @@ export async function POST(req: NextRequest) {
       },{status: 400});
     }
 
-    // step:3 - LLM generator ko call karo. // Ye generator handle karega: LLM → tool → LLM → final response.
+    // step:3 - add the inputGuardrails to check the input
+    const res = await inputGuardrails(prompt, sessionId.value) as {allowed: boolean};
+    if(!res.allowed){
+      return NextResponse.json({
+        error: "Your Input is restricted by guradrails",
+      },{status: 400});
+    }
+
+    // step:4 - LLM generator ko call karo. // Ye generator handle karega: LLM → tool → LLM → final response.
     const response = getResponseOfLLM(prompt, sessionId.value);
 
-    // step:4 - Encoder create karo. Isse JavaScript string ko Uint8Array mein convert karke stream mein bhejega.
+    // step:5 - Encoder create karo. Isse JavaScript string ko Uint8Array mein convert karke stream mein bhejega.
     const encoder = new TextEncoder();
 
-    // step:5 - frontend ke liye ReadableStream create karo.
+    // step:6 - frontend ke liye ReadableStream create karo.
     const stream = new ReadableStream({
       async start(controller) {
         // loop the response and take chunks
@@ -138,7 +147,7 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // step:6 - Return stream response
+    // step:7 - Return stream response
     return new Response(stream, {
       status: 200,
       headers: {
@@ -148,8 +157,14 @@ export async function POST(req: NextRequest) {
       },
     });
   } 
-  catch (error) {
+  catch (error: any) {
     console.error("API error:", error);
+
+    if(error.status === 429 || error.code === 429){
+      return NextResponse.json({
+        error: " Token limit exceeded, Please try after some time ",
+      },{status: 429});
+    }
 
     return NextResponse.json({
       error: "Something went wrong while generating response",

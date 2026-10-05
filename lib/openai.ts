@@ -1,10 +1,11 @@
 import OpenAI from "openai";
 
 
-const API_KEY = process.env.GEMINI_API_KEY;
+const API_KEY = process.env.LLM_API_KEY;
+const BASE_URL = process.env.LLM_BASE_URL;
 
-if(!API_KEY){
-  console.error("GEMINI API KEY is missing in the env");
+if(!API_KEY || !BASE_URL){
+  console.error("LLM_API_KEY or LLM_BASE_URL is missing in the env");
   process.exit(1);
 }
 
@@ -12,7 +13,7 @@ if(!API_KEY){
 // creating a openai client
 const client = new OpenAI({
   apiKey: API_KEY,
-  baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/"
+  baseURL: BASE_URL || "https://generativelanguage.googleapis.com/v1beta/openai/"
 });
 
 

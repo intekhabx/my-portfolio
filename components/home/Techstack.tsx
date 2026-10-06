@@ -27,6 +27,7 @@ import {
   TbCloud,
 } from "react-icons/tb";
 import { IconType } from "react-icons";
+import SectionHeader from "./Sectionheader";
 
 interface Skill {
   name: string;
@@ -50,8 +51,8 @@ const categories: Category[] = [
     colColor: "#61DAFB",
     description: "Building responsive, highly accessible, and pixel-perfect user interfaces.",
     skills: [
-      { name: "React", level: "Expert", Icon: SiReact, color: "#61DAFB" },
-      { name: "Next.js", level: "Expert", Icon: SiNextdotjs, color: "#a3a3a3" },
+      { name: "React", level: "Advanced", Icon: SiReact, color: "#61DAFB" },
+      { name: "Next.js", level: "Advanced", Icon: SiNextdotjs, color: "#a3a3a3" },
       { name: "Tailwind CSS", level: "Advanced", Icon: SiTailwindcss, color: "#38BDF8" },
       { name: "HTML / CSS", level: "Expert", Icon: SiHtml5, color: "#E34F26" },
     ],
@@ -88,7 +89,7 @@ const categories: Category[] = [
     skills: [
       { name: "MongoDB", level: "Advanced", Icon: SiMongodb, color: "#47A248" },
       { name: "PostgreSQL", level: "Advanced", Icon: SiPostgresql, color: "#4169E1" },
-      { name: "Redis", level: "Intermediate", Icon: SiRedis, color: "#DC382D" },
+      { name: "Redis", level: "Advanced", Icon: SiRedis, color: "#DC382D" },
       { name: "Docker", level: "Intermediate", Icon: SiDocker, color: "#2496ED" },
       { name: "Git / GitHub", level: "Advanced", Icon: SiGit, color: "#F05032" },
     ],
@@ -107,35 +108,7 @@ export default function TechStack() {
   return (
     <section id="stack" className="border-b border-[var(--line)] py-16">
       {/* ── Section Header ── */}
-      <div className="max-w-7xl mx-auto px-6 md:px-12 mb-4 text-center">
-        <div className="flex flex-col items-center justify-center max-w-3xl mx-auto pb-4 border-b border-[var(--line)]">
-          
-           {/* Sub-badge / Index */}
-          <div className="flex items-center justify-center gap-3 mb-3">
-            <span className="text-[12px] font-mono tracking-[3px] text-[var(--ink-muted)]">
-              01
-            </span>
-            <span className="text-[var(--ink-muted)] text-[12px]">—</span>
-            <span className="text-[11px] font-mono uppercase tracking-[3px] text-[var(--ink-muted)]">
-              Technical Mastery
-            </span>
-          </div>
-
-          {/* Main Title */}
-          <h2
-            className="text-[28px] sm:text-[36px] md:text-[46px] tracking-[-1.5px] leading-tight font-semibold text-[var(--ink)] mb-4"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            Technology <em className="italic font-serif font-normal text-[var(--accent)]">Stack</em>
-          </h2>
-
-          {/* Centered Description */}
-          <p className="text-[12px] md:text-[14px] text-[var(--ink-muted)] max-w-xl leading-relaxed font-normal">
-            A comprehensive breakdown of frameworks, databases, core runtime languages, and developer tools powering my software architecture.
-          </p>
-
-        </div>
-      </div>
+      <SectionHeader slNo="01" slText="Technical Mastery" leftMainTitle="Technology" rightMainTitle="Stack" desc="A comprehensive breakdown of frameworks, databases, core runtime languages, and developer tools powering my software architecture." />
 
       {/* ── Grid Showcase ── */}
       <div className="max-w-7xl mx-auto px-6 md:px-12">

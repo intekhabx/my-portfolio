@@ -51,8 +51,8 @@ const categories: Category[] = [
     colColor: "#61DAFB",
     description: "Building responsive, highly accessible, and pixel-perfect user interfaces.",
     skills: [
-      { name: "React", level: "Expert", Icon: SiReact, color: "#61DAFB" },
-      { name: "Next.js", level: "Expert", Icon: SiNextdotjs, color: "#a3a3a3" },
+      { name: "React", level: "Advanced", Icon: SiReact, color: "#61DAFB" },
+      { name: "Next.js", level: "Advanced", Icon: SiNextdotjs, color: "#a3a3a3" },
       { name: "Tailwind CSS", level: "Advanced", Icon: SiTailwindcss, color: "#38BDF8" },
       { name: "HTML / CSS", level: "Expert", Icon: SiHtml5, color: "#E34F26" },
     ],
@@ -89,7 +89,7 @@ const categories: Category[] = [
     skills: [
       { name: "MongoDB", level: "Advanced", Icon: SiMongodb, color: "#47A248" },
       { name: "PostgreSQL", level: "Advanced", Icon: SiPostgresql, color: "#4169E1" },
-      { name: "Redis", level: "Intermediate", Icon: SiRedis, color: "#DC382D" },
+      { name: "Redis", level: "Advanced", Icon: SiRedis, color: "#DC382D" },
       { name: "Docker", level: "Intermediate", Icon: SiDocker, color: "#2496ED" },
       { name: "Git / GitHub", level: "Advanced", Icon: SiGit, color: "#F05032" },
     ],

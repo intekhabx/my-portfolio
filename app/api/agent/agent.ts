@@ -4,6 +4,7 @@ import { getProjectsTool } from "./tools/get-projects";
 import { getProjectDetailsTool } from "./tools/get-project-details";
 import { toolHandlers } from "./tools";
 import { systemPrompt } from "./utils/system-prompt";
+import { webSearchTool } from "./tools/web-search";
 
 
 
@@ -45,12 +46,19 @@ export default async function* getResponseOfLLM(userPrompt: string, userSessionI
   ];
 
   // STEP:4. Available tools define kiye hai.
-  const tools = [ getProjectsTool, getProjectDetailsTool ];
+  const tools = [ getProjectsTool, getProjectDetailsTool, webSearchTool ];
 
 
   // STEP:5. LLM → tool → LLM → tool...
-  // jab tak final answer nahi milta, loop chalega.
-  while(true){
+  // infilite loop ki jahan ab koi v tool same ya different tools, 5 bar se jyda call nhi hoga
+  const MAX_TOOL_ITERATION = 5;
+  let toolIteration = 0;
+
+  let webSearchCount = 0;
+  const MAX_WEB_SEARCHES = 2;
+
+  while(toolIteration < MAX_TOOL_ITERATION){
+    toolIteration = toolIteration + 1;
     // STEP:6. LLM ko tools ke saath stream mode mein call kr rhe h
     const streamResponse = await client.chat.completions.create({
       model: process.env.LLM_MODEL || "gemini-2.5-flash",
@@ -64,7 +72,7 @@ export default async function* getResponseOfLLM(userPrompt: string, userSessionI
     let message = "";
 
     // STEP 8: Stream mein tool calls collect karenge.
-    const toolCalls: Record<number,{ id?: string; name: string; arguments: string;}> = {};
+    const toolCalls: Record<number,{ id?: string; name: string; arguments: string; thought_signature?: string;}> = {};
 
     // STEP 9: LLM stream ko chunk-by-chunk read karo.
     for await (const chunk of streamResponse) {
@@ -90,9 +98,14 @@ export default async function* getResponseOfLLM(userPrompt: string, userSessionI
             toolCalls[index] = {
               id: toolCall.id,
               name: "",
-              arguments: ""
+              arguments: "",
+              thought_signature: (toolCall as any)?.extra_content?.google?.thought_signature,
             };
           }
+
+          // if (toolCall.id) {
+          //   toolCalls[index].id = toolCall.id;
+          // }
         
           // STEP 12: Tool name collect karo.
           if (toolCall.function?.name) {
@@ -102,6 +115,10 @@ export default async function* getResponseOfLLM(userPrompt: string, userSessionI
           // STEP 13: Tool arguments collect karo.
           if (toolCall.function?.arguments) {
             toolCalls[index].arguments += toolCall.function.arguments;
+          }
+
+          if ((toolCall as any)?.extra_content?.google?.thought_signature) {
+            toolCalls[index].thought_signature = (toolCall as any).extra_content?.google?.thought_signature;
           }
         }
       }
@@ -125,7 +142,14 @@ export default async function* getResponseOfLLM(userPrompt: string, userSessionI
       function: {
         name: call.name,
         arguments: call.arguments
-      }
+      },
+      ...(call.thought_signature ? { 
+        extra_content: {
+          google: {
+            thought_signature: call.thought_signature
+          }
+        } 
+      } : {}),
       }))
     });
 
@@ -134,6 +158,23 @@ export default async function* getResponseOfLLM(userPrompt: string, userSessionI
       const toolHandler = toolHandlers[call.name as keyof typeof toolHandlers];
       if(!toolHandler){
         throw new Error(`Unknown tool: ${call.name}`);
+      }
+
+      // we add guard so only 2 times it can search on web
+      if (call.name === "web_search") {
+        if (webSearchCount >= MAX_WEB_SEARCHES) {
+          messages.push({
+            role: "tool",
+            tool_call_id: call.id,
+            content: JSON.stringify({
+              error: "Maximum web search limit reached. Use the available search results and answer the user.",
+            }),
+          });
+
+          continue;
+        }
+
+        webSearchCount++;
       }
 
       const args = JSON.parse(call.arguments);

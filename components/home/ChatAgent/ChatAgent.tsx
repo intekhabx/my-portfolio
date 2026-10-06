@@ -160,6 +160,11 @@ export default function ChatAgent() {
     }
   };
 
+  useEffect(()=> {
+    reset();
+  }, [])
+  
+
   return (
     <div
       className="flex flex-col w-full"

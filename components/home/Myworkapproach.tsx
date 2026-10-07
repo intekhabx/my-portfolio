@@ -68,7 +68,7 @@ export default function MyWorkApproach() {
               the same path, so quality stays consistent from the first commit
               to the final release.
             </p>
-            <ol className="flex flex-wrap items-center gap-x-2 gap-y-2">
+            <ol className="flex flex-wrap items-center justify-center sm:justify-start gap-x-2 gap-y-2">
               {FLOW.map(({ label, Icon, color }, i) => (
                 <li key={label} className="flex items-center gap-2">
                   <span 
@@ -77,7 +77,7 @@ export default function MyWorkApproach() {
                     {label}
                   </span>
                   {i < FLOW.length - 1 && (
-                    <span aria-hidden className="text-[var(--accent)]">→</span>
+                    <span aria-hidden className="text-[var(--accent)] hidden sm:inline-flex">→</span>
                   )}
                 </li>
               ))}

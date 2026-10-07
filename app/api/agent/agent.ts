@@ -178,11 +178,22 @@ export default async function* getResponseOfLLM(userPrompt: string, userSessionI
       }
 
       const args = JSON.parse(call.arguments);
-      // Actual backend function execute karo.
-      const result = await toolHandler(args);
 
-      // Tool result ko messages mein add karo // taaki next LLM request mein model // tool ka result dekh sake.
-      messages.push({ role: "tool", tool_call_id: call.id, content: JSON.stringify(result)});
+      console.log("TOOL CALL:", {name: call.name, args});
+
+      try {
+        // Actual backend function execute karo.
+        const result = await toolHandler(args);
+
+        console.log("TOOL RESULT:", { name: call.name, result});
+  
+        // Tool result ko messages mein add karo // taaki next LLM request mein model // tool ka result dekh sake.
+        messages.push({ role: "tool", tool_call_id: call.id, content: JSON.stringify(result)});
+      } 
+      catch (error) {
+        console.error("🔥 TOOL FAILED:", { tool: call.name, args, error,});
+        messages.push({ role: "tool", tool_call_id: call.id, content: JSON.stringify({ error: `Tool ${call.name} failed`}) });
+      }
     }
 
     // ***NOW WHILE LOOP PHIR START HOGA AUR ITERATE KREGA (step:6 to step:17)***

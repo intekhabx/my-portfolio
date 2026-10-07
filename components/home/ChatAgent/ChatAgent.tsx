@@ -428,13 +428,15 @@ export default function ChatAgent() {
                         background: msg.sender === "user"
                           ? `linear-gradient(135deg, ${ACCENT}, #0b7fd6)`
                           : "rgba(255,255,255,0.045)",
-                        border: msg.sender === "user" ? "none" : `1px solid ${BORDER}`,
+                        border: msg.sender === "user" ? "none" : msg.text.startsWith('{"error":') ? "1px solid red" : `1px solid ${BORDER}`,
                         color: msg.sender === "user" ? "#fff" : TEXT,
                         boxShadow: msg.sender === "user" ? "0 8px 24px -10px rgba(29,155,240,0.6)" : "none",
                       }}
                     >
                       {/* format the message and show to user */}
-                      <MarkdownMessage content={msg.text} />
+                      {msg.text.startsWith('{"error":') ? <div className="text-red-500">{msg.text.slice(10, msg.text.lastIndexOf('"'))}</div>
+                        : <MarkdownMessage content={msg.text} />
+                      }
                     </div>
                   </div>
                 </div>

@@ -36,7 +36,7 @@ export default function HeroMiddle() {
             </span>
           </h1>
 
-          <span className="absolute left-14 top-[-14px] sm:left-4 sm:top-[-11px]">
+          <span className="absolute left-18 top-[-14px] sm:left-4 sm:top-[-11px]">
             <TypedGreeting />
           </span>
         </div>

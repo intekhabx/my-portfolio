@@ -194,14 +194,14 @@ export default function AboutSection() {
             </div>
 
             {/* Constants */}
-            <div className="border-t border-[var(--line)] pt-4">
+            <div className="border-t border-[var(--line)] pt-4 flex flex-col items-center sm:block">
               <p className="mb-3 text-[10px] font-mono tracking-[1.5px] sm:tracking-[3px] uppercase text-[var(--ink-muted)]">
                 Only constants in my life
               </p>
               <ul className="flex flex-wrap items-center gap-2">
                 {CONSTANTS.map(({ label, Icon }, i) => (
                   <li key={label} className="flex items-center gap-2">
-                    <span className="inline-flex items-center gap-1 sm:gap-2 rounded-full border border-[var(--line)] bg-[var(--bg-soft)] px-2.5 sm:px-3.5 py-1.5 font-mono text-[12px] text-[var(--ink-soft)]">
+                    <span className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--bg-soft)] px-2.5 sm:px-3.5 py-1.5 font-mono text-[12px] text-[var(--ink-soft)]">
                       <Icon className="text-[var(--accent)]" size={13} />
                       {label}
                     </span>

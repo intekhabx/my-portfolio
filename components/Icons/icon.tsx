@@ -74,3 +74,85 @@ export const InngestIcon: IconType = ({ size = 24, color = "currentColor", style
     />
   </svg>
 );
+
+// NgrokIcon
+export const NgrokIcon: IconType = ({ size = 24, color = "currentColor", style, ...props }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    style={{ color, ...style }}
+    {...props}
+  >
+    {/* Background Badge (optional, remove path if you only want the 'n' symbol) */}
+    <rect width="24" height="24" rx="4" fill="#1f1f23" />
+    
+    {/* Exact Lowercase 'n' Icon Path */}
+    <path
+      d="M7.5 16.5V7.5H9.7V9.1C10.2 8.1 11.2 7.5 12.5 7.5C14.7 7.5 15.5 8.9 15.5 11.2V16.5H13.3V11.5C13.3 10.1 12.8 9.3 11.7 9.3C10.5 9.3 9.7 10.2 9.7 11.7V16.5H7.5Z"
+      fill={color}
+    />
+  </svg>
+);
+
+// ZustandIcon
+export const ZustandIcon: IconType = ({ size = 24, color = "currentColor", style, ...props }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    style={{ color, ...style }}
+    {...props}
+  >
+    <path
+      d="M4.5 4.5C3.67 4.5 3 5.17 3 6V8C3 8.83 3.67 9.5 4.5 9.5H5V14.5C5 15.33 5.67 16 6.5 16H8V18.5C8 19.33 8.67 20 9.5 20H11V16H13V20H14.5C15.33 20 16 19.33 16 18.5V16H17.5C18.33 16 19 15.33 19 14.5V9.5H19.5C20.33 9.5 21 8.83 21 8V6C21 5.17 20.33 4.5 19.5 4.5H18C17.17 4.5 16.5 5.17 16.5 6V7.5H7.5V6C7.5 5.17 6.83 4.5 6 4.5H4.5ZM8.5 10.5C9.05 10.5 9.5 10.95 9.5 11.5C9.5 12.05 9.05 12.5 8.5 12.5C7.95 12.5 7.5 12.05 7.5 11.5C7.5 10.95 7.95 10.5 8.5 10.5ZM15.5 10.5C16.05 10.5 16.5 10.95 16.5 11.5C16.5 12.05 16.05 12.5 15.5 12.5C14.95 12.5 14.5 12.05 14.5 11.5C14.5 10.95 14.95 10.5 15.5 10.5Z"
+      fill="currentColor"
+    />
+  </svg>
+);
+
+//TanStack Logo Icon 
+export const TanStackIcon: IconType = ({ size = 24, color = "currentColor", style, ...props }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    style={{ color, ...style }}
+    {...props}
+  >
+    {/* Outer Circle */}
+    <circle cx="12" cy="12" r="9.5" stroke="currentColor" strokeWidth="1.5" />
+    
+    {/* Palm Tree Leaf / Island Shape */}
+    <path
+      d="M11 15.5C10 13 8 11.5 6 11C8.5 11 11 9 11.5 7.5C12.5 9 15 10 16.5 10C14.5 11.5 13.5 13.5 13 15.5"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    
+    {/* Chair / Lounge on Beach */}
+    <path
+      d="M10 16.5L12.5 12.5L15.5 15.5L11.5 17"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    
+    {/* Waves */}
+    <path
+      d="M6.5 17.5C8 16.8 10 16.8 11.5 17.5C13 18.2 15 18.2 16.5 17.5"
+      stroke="currentColor"
+      strokeWidth="1.2"
+      strokeLinecap="round"
+    />
+  </svg>
+);

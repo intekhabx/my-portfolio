@@ -27,7 +27,7 @@ import {
 } from "react-icons/si";
 import { TbApi, TbDatabase } from "react-icons/tb";
 import { IconType } from "react-icons";
-import { BullMQIcon, InngestIcon } from "../Icons/icon";
+import { BullMQIcon, InngestIcon, TanStackIcon, NgrokIcon, ZustandIcon } from "../Icons/icon";
 
 /* ── Skill data — icon + label + brand color ─────────────────── */
 interface Skill {
@@ -41,12 +41,16 @@ const skills: Skill[] = [
   { label: "TypeScript", Icon: SiTypescript,    color: "#3178C6" },
   { label: "React",      Icon: SiReact,         color: "#61DAFB" },
   { label: "Next.js",    Icon: SiNextdotjs,     color: "#FFFFFF" },
+  { label: "Zustand",    Icon: ZustandIcon,     color: "#E63946" },
+  { label: "TanStack Router", Icon: TanStackIcon, color: "#FF4154" },
+  { label: "TanStack Query", Icon: TanStackIcon, color: "#FF4154" },
   { label: "Node.js",    Icon: SiNodedotjs,     color: "#339933" },
   { label: "Express",    Icon: SiExpress,       color: "#9CA3AF" },
   { label: "MongoDB",    Icon: SiMongodb,       color: "#47A248" },
   { label: "PostgreSQL", Icon: SiPostgresql,    color: "#4169E1" },
   { label: "REST API",   Icon: TbApi,           color: "#1d9bf0" },
   { label: "tRPC",       Icon: SiTrpc,          color: "#398CCB" },
+  { label: "ngrok",      Icon: NgrokIcon,       color: "#FFFFFF" },
   { label: "SQL",        Icon: TbDatabase,      color: "#60A5FA" },
   { label: "Socket.io",  Icon: SiSocketdotio,   color: "#FFFFFF" },
   { label: "Tailwind",   Icon: SiTailwindcss,   color: "#38BDF8" },

@@ -13,8 +13,8 @@ export const toolHandlers = {
     return getProjectDetails(args.projectName);
   },
 
-  web_search: async(args: {query: string}) => {
-    return webSearch(args.query);
+  web_search: async(args: {query: string, site?: string}) => {
+    return webSearch(args.query, args?.site);
   },
 
 };

@@ -7,9 +7,20 @@ const tvly = tavily({
 
 
 // method 1: use tavily using sdk
-export async function webSearch(query: string) {
-  const response = await tvly.search(query, {
+export async function webSearch(query: string, site?: string) {
+
+  const finalSite = site?.trim()
+                        .replace(/^site:\s*/i, "")   // remove site: if site has
+                        .replace(/^https?:\/\//, "") // remove https://
+                        .replace(/^www\./, "")       // remove www.
+                        .replace(/\/$/, "");
+
+  const finalQuery = finalSite ? `site:${finalSite} ${query}` : query;
+  // console.log("Tavily query:", finalQuery);
+
+  const response = await tvly.search(finalQuery, {
     maxResults: 5,
+    searchDepth: "advanced",
   });
 
   // console.log("Response", response);
@@ -26,14 +37,18 @@ export const webSearchTool = {
   type: "function" as const,
   function: {
     name: "web_search",
-    description: "Search the public web for current or missing information.",
+    description: "Search the public web for current or missing information. If the user wants results from a specific website, provide the website separately using the site parameter.",
     parameters: {
       type: "object",
       properties: {
         query: {
           type: "string",
-          description: "The search query.",
+          description: "The actual search query or terms, for example 'projects' or 'repository'.",
         },
+        site: {
+          type: "string",
+          description: "Optional website/domain to restrict the search to, for example 'github.com/intekhabx'"
+        }
       },
       required: ["query"],
     },

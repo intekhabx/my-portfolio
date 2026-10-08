@@ -1,3 +1,4 @@
+import dbConnection from "@/lib/db";
 import { projectModel } from "@/models/project.model"
 
 
@@ -7,6 +8,10 @@ function escapeRegex(value: string) {
 
 
 export async function getProjectDetails(projectName: string) {
+
+  // we add dbConnecton because nextjs run on the edge, when LLM call this tool first it establish DB conneciton
+  await dbConnection();
+
   const safeName = escapeRegex(projectName.trim());
 
   return await projectModel.findOne({

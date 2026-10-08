@@ -1,7 +1,12 @@
+import dbConnection from "@/lib/db";
 import { projectModel } from "@/models/project.model";
 
 
 export async function getProjects(){
+
+    // we add dbConnecton because nextjs run on the edge, when LLM call this tool first it establish DB conneciton
+  await dbConnection();
+
   return await projectModel.find({}, {
     name: 1,
     description: 1,

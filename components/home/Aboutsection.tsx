@@ -92,7 +92,7 @@ export default function AboutSection() {
                       <FaLinkedinIn className="h-3 w-3 sm:h-auto sm:w-auto" />
                     </a>
                     <a
-                      href="https://www.linkedin.intekhabx/in/intekhabx/"
+                      href="https://x.com/intekhabx"
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label="X profile"

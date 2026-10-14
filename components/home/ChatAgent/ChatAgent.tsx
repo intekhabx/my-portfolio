@@ -363,7 +363,7 @@ export default function ChatAgent() {
               </h2>
 
               <p className="text-[12px] text-center max-w-[300px] leading-relaxed mt-3 mb-6" style={{ color: TEXT_MUTED }}>
-                Projects, stack, experience and availability — all through conversation.
+                Projects, stack, experience and availability - all through conversation.
               </p>
 
               {/* Quick prompts — ek hi line me */}

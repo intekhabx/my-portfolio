@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 type Word = { text: string; accent: boolean };
 
 const WORDS: Word[] = [
-  { text: "Hello,", accent: false },
+  { text: "Hi,", accent: false },
   { text: "I'm", accent: false },
   { text: "Md", accent: true },
   { text: "Intekhab", accent: true },
@@ -23,7 +23,8 @@ interface TypedGreetingProps {
 export default function TypedGreeting({
   speed = 350,
   delay = 400,
-  className = "",
+  // Phone 18px · tablet 22px · desktop 26px. Size badalna ho to yahan badlo.
+  className = "text-[18px] sm:text-[22px] md:text-[26px]",
 }: TypedGreetingProps) {
   const [count, setCount] = useState<number>(0);
 
@@ -56,7 +57,7 @@ export default function TypedGreeting({
   return (
     <p
       aria-label={FULL}
-      className={`relative inline-block font-mono text-[11px] md:text-[10px] tracking-wide text-[var(--ink-soft)] ${className}`}
+      className={`relative inline-block font-mono font-medium tracking-tight text-[var(--ink-soft)] ${className}`}
     >
       {/* invisible full text reserves the space, so the layout never shifts */}
       <span aria-hidden className="invisible whitespace-nowrap">
@@ -68,13 +69,13 @@ export default function TypedGreeting({
         {WORDS.slice(0, count).map((w, i) => (
           <span
             key={i}
-            className={w.accent ? "text-[var(--accent)] font-semibold" : ""}
+            className={w.accent ? "text-[var(--accent)] font-bold" : ""}
           >
             {w.text}
             {i < WORDS.length - 1 ? " " : ""}
           </span>
         ))}
-        <span className="inline-block w-[1px] h-[1em] translate-y-[2px] bg-[var(--accent)] animate-pulse" />
+        <span className="inline-block w-[2px] h-[1em] translate-y-[2px] ml-0.5 bg-[var(--accent)] animate-pulse" />
       </span>
     </p>
   );

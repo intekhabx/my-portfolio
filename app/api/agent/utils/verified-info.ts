@@ -9,7 +9,7 @@ export const verifiedInformation = `
   Education & Degree: 
     * B.Tech in Computer Science & Engineering (CSE), Seacom Engineering College, MAKAUT, (2022 to 2026) | Graduated.
     * BSc - Bachelor of Science with Mathematics Hons (2021 to 2024) | Graduated.
-    * 12th and 10th from BSEB board (2018 - 2019) and (2019 to 2021) | Completed.
+    * 12th (2019 to 2021) and 10th (2018 - 2019) from BSEB board | Completed.
   Interests: 
     full-stack web development, backend engineering, 
     real-time applications, APIs, databases, authentication, 
